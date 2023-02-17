@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Utility Bill</string>
+    <string name="card_title">Картка</string>
+    <string name="card_number">0000 **** **** 0000</string>
+    <string name="Month">Місяць</string>
+    <string name="month_name">Лютий</string>
+    <string name="edit_card_button">Edit card button</string>
+    <string name="choose_title">Виберіть послуги для формування рахунку:</string>
+    <string name="create_bill">Сформувати рахунок</string>
+    <string name="service_tariff">Тариф: %f</string>
+    <string name="previous_value">Попередні</string>
+    <string name="zero">0</string>
+    <string name="previous_service_value">Previous service value</string>
+    <string name="current_title">Поточні</string>
 </resources>

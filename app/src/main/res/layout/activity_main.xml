@@ -6,13 +6,104 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/gradient_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textViewCardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_title"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/extra_light_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewCardNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_number"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCardTitle"/>
+
+        <TextView
+            android:id="@+id/textViewMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Month"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/extra_light_blue"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCardNumber"/>
+
+        <TextView
+            android:id="@+id/textViewMonthName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/month_name"
+            android:fontFamily="@font/lato_regular"
+            android:textColor="@color/white"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewMonth"/>
+
+        <ImageView
+            android:id="@+id/imageViewEditCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_edit"
+            android:contentDescription="@string/edit_card_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewCardTitle"
+            app:layout_constraintBottom_toBottomOf="@id/textViewCardNumber"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
+        android:id="@+id/textViewChooseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/choose_title"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/dark_gray"
+        android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/constraintHeader"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewChooseTitle"/>
+
+    <Button
+        android:id="@+id/buttonCreateBill"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:text="@string/create_bill"
+        android:textSize="16sp"
+        android:fontFamily="@font/lato_bold"
+        android:textAllCaps="false"
+        android:background="@drawable/button_background"
+        android:letterSpacing="0.01"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
