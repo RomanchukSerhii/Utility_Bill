@@ -9,5 +9,18 @@
         android:id="@+id/mainFragment"
         android:name="com.example.utilitybill.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_saveServiceFragment"
+            app:destination="@id/saveServiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/saveServiceFragment"
+        android:name="com.example.utilitybill.SaveServiceFragment"
+        android:label="fragment_save_service"
+        tools:layout="@layout/fragment_save_service" >
+        <action
+            android:id="@+id/action_saveServiceFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

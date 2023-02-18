@@ -33,8 +33,8 @@ interface ServiceDao {
     fun getServices(): LiveData<List<Service>>
 
     @Insert
-    fun addService(service: Service)
+    suspend fun addService(service: Service)
 
     @Query("DELETE FROM service WHERE id = :id")
-    fun removeService(id: Int)
+    suspend fun removeService(id: Int)
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.databinding.FragmentMainBinding
 
 
@@ -29,6 +30,7 @@ class MainFragment : Fragment() {
         serviceAdapter = ServiceAdapter()
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
+        binding.buttonAddService.setOnClickListener { goToSaveService() }
     }
 
     override fun onDestroyView() {
@@ -36,8 +38,14 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    private fun goToSaveService() {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToSaveServiceFragment()
+        )
+    }
+
     private fun observeViewModels() {
-        viewModel.getServices().observe(this) {
+        viewModel.getServices().observe(viewLifecycleOwner) {
             serviceAdapter.submitList(it)
         }
     }

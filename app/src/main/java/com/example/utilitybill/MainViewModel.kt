@@ -3,6 +3,8 @@ package com.example.utilitybill
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val serviceDao = ServiceDatabase.getDatabase(application).serviceDao()
@@ -11,11 +13,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return serviceDao.getServices()
     }
 
-    fun addService(service: Service) {
-        serviceDao.addService(service)
+    fun addService(name: String, tariff: Double, previousValue: Int) {
+        val service = Service(
+            name = name,
+            tariff = tariff,
+            previousValue = previousValue
+        )
+        viewModelScope.launch {
+            serviceDao.addService(service)
+        }
     }
 
     fun removeService(id: Int) {
-        serviceDao.removeService(id)
+        viewModelScope.launch {
+            serviceDao.removeService(id)
+        }
     }
 }

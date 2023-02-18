@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.databinding.FragmentSaveServiceBinding
 
 class SaveServiceFragment : Fragment() {
@@ -29,6 +30,14 @@ class SaveServiceFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.buttonSaveService.setOnClickListener {
+            saveService()
+            goToMainFragment()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -37,10 +46,16 @@ class SaveServiceFragment : Fragment() {
     private fun saveService() {
         binding.apply {
             val name = editTextNameService.text.toString()
-            val tariff = editTextServiceTariff.text.toString().toFloat()
-            val previousValue = editTextPreviousServiceValue.toString().toInt()
-
+            val tariff = editTextServiceTariff.text.toString().toDouble()
+            val previousValue = editTextPreviousServiceValue.text.toString().toInt()
+            viewModel.addService(name, tariff, previousValue)
         }
+    }
+
+    private fun goToMainFragment() {
+        findNavController().navigate(
+            SaveServiceFragmentDirections.actionSaveServiceFragmentToMainFragment()
+        )
     }
 
 }
