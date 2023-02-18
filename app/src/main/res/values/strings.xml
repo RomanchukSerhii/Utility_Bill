@@ -8,8 +8,15 @@
     <string name="choose_title">Виберіть послуги для формування рахунку:</string>
     <string name="create_bill">Сформувати рахунок</string>
     <string name="service_tariff">Тариф: %f</string>
-    <string name="previous_value">Попередні</string>
+    <string name="previous">Попередні</string>
     <string name="zero">0</string>
     <string name="previous_service_value">Previous service value</string>
     <string name="current_title">Поточні</string>
+    <string name="add_service">Додати послугу</string>
+    <string name="service_name">Назва послуги:</string>
+    <string name="tariff">Тариф:</string>
+    <string name="previous_value">Попередні значення:</string>
+    <string name="save">Зберегти</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

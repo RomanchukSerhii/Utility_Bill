@@ -60,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="22dp"
             android:fontFamily="@font/lato_regular"
-            android:text="@string/previous_value"
+            android:text="@string/previous"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toEndOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/textViewServiceTariff" />
