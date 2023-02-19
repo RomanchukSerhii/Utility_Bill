@@ -2,6 +2,7 @@ package com.example.utilitybill
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utilitybill.databinding.ServiceItemBinding
 
-class ServiceAdapter : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
+class ServiceAdapter(
+    private val onItemClicked: (View) -> Unit
+) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceItemViewHolder {
         val binding = ServiceItemBinding.inflate(
@@ -23,6 +26,9 @@ class ServiceAdapter : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder
     override fun onBindViewHolder(holder: ServiceItemViewHolder, position: Int) {
         val currentService = getItem(position)
         holder.bind(currentService, holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            onItemClicked(holder.itemView)
+        }
     }
 
     class ServiceItemViewHolder(
@@ -48,7 +54,6 @@ class ServiceAdapter : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder
             override fun areContentsTheSame(oldItem: Service, newItem: Service): Boolean {
                 return oldItem.id == newItem.id
             }
-
         }
     }
 }

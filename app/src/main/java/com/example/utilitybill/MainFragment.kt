@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.databinding.FragmentMainBinding
+import com.example.utilitybill.databinding.ServiceItemBinding
 
 
 class MainFragment : Fragment() {
@@ -27,11 +29,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        serviceAdapter = ServiceAdapter()
+        serviceAdapter = ServiceAdapter { onListItemClicked(it)}
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
-        binding.buttonAddService.setOnClickListener { goToSaveService() }
-    }
+        binding.buttonAddService.setOnClickListener { goToSaveService() }    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -49,4 +50,10 @@ class MainFragment : Fragment() {
             serviceAdapter.submitList(it)
         }
     }
+
+    private fun onListItemClicked(view: View) {
+        val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
+        checkableLayout?.toggle()
+    }
+
 }
