@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.utilitybill.MainFragment"
+        android:name="com.example.utilitybill.model.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/saveServiceFragment"
-        android:name="com.example.utilitybill.SaveServiceFragment"
+        android:name="com.example.utilitybill.model.SaveServiceFragment"
         android:label="fragment_save_service"
         tools:layout="@layout/fragment_save_service" >
         <action

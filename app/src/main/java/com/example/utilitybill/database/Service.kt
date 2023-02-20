@@ -1,4 +1,4 @@
-package com.example.utilitybill
+package com.example.utilitybill.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,5 +17,11 @@ data class Service(
     val tariff: Double,
 
     @ColumnInfo(name = "previous_value")
-    val previousValue: Int
+    val previousValue: Int,
+
+    @ColumnInfo(name = "current_value")
+    val currentValue: Int = 0,
+
+    @ColumnInfo(name = "is_used")
+    val isUsed: Boolean = true
 )

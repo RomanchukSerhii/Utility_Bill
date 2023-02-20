@@ -1,4 +1,4 @@
-package com.example.utilitybill
+package com.example.utilitybill.model
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Checkable
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.card.MaterialCardView
 
 class CheckableLayout (
     context: Context,

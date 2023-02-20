@@ -11,17 +11,16 @@
     app:cardUseCompatPadding="true"
     app:strokeColor="@android:color/background_light">
 
-    <com.example.utilitybill.CheckableLayout
+    <com.example.utilitybill.model.CheckableLayout
         android:id="@+id/checkable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/radioButton"
+            android:id="@+id/checkBoxUsed"
             style="@style/CustomCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             app:useMaterialThemeColors="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +41,7 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/guidelineStart"
-            app:layout_constraintTop_toTopOf="@id/radioButton"
+            app:layout_constraintTop_toTopOf="@id/checkBoxUsed"
             tools:text="Електроенергія" />
 
         <TextView
@@ -129,7 +128,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
 
-    </com.example.utilitybill.CheckableLayout>
+    </com.example.utilitybill.model.CheckableLayout>
 
 
 </com.google.android.material.card.MaterialCardView>

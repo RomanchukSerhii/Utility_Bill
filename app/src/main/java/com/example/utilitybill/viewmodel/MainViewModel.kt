@@ -1,9 +1,11 @@
-package com.example.utilitybill
+package com.example.utilitybill.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.utilitybill.database.Service
+import com.example.utilitybill.database.ServiceDatabase
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -21,6 +23,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
         viewModelScope.launch {
             serviceDao.addService(service)
+        }
+    }
+
+    fun updateUsedStatus(id: Int, isUsed: Boolean) {
+        viewModelScope.launch {
+            serviceDao.changeUsedStatus(id, isUsed)
         }
     }
 

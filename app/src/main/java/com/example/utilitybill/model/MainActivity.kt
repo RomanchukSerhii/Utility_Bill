@@ -1,10 +1,10 @@
-package com.example.utilitybill
+package com.example.utilitybill.model
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.utilitybill.R
 import com.example.utilitybill.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

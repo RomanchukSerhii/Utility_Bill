@@ -1,15 +1,16 @@
-package com.example.utilitybill
+package com.example.utilitybill.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-@Database(entities = [Service::class], version = 1, exportSchema = false)
+@Database(entities = [Service::class], version = 2, exportSchema = false)
 abstract class ServiceDatabase : RoomDatabase() {
     abstract fun serviceDao(): ServiceDao
 
     companion object {
         private const val DB_NAME = "service.db"
+
         @Volatile
         private var INSTANCE: ServiceDatabase? = null
 
@@ -37,4 +38,10 @@ interface ServiceDao {
 
     @Query("DELETE FROM service WHERE id = :id")
     suspend fun removeService(id: Int)
+
+    @Query("UPDATE service SET is_used = :isUsed WHERE id = :id")
+    suspend fun changeUsedStatus(id: Int, isUsed: Boolean)
+
+    @Query("UPDATE service SET previous_value = :previousValue, current_value = :currentValue WHERE id = :id")
+    suspend fun changeValues(id: Int, previousValue: Int, currentValue: Int)
 }
