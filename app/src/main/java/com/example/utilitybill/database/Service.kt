@@ -23,5 +23,11 @@ data class Service(
     val currentValue: Int = 0,
 
     @ColumnInfo(name = "is_used")
-    val isUsed: Boolean = true
+    val isUsed: Boolean = true,
+
+    @ColumnInfo(name = "is_has_meter")
+    val isHasMeter: Boolean = true,
+
+    @ColumnInfo(name = "unit")
+    val unit: String = ""
 )
