@@ -16,9 +16,9 @@
     </fragment>
     <fragment
         android:id="@+id/saveServiceFragment"
-        android:name="com.example.utilitybill.model.SaveServiceFragment"
+        android:name="com.example.utilitybill.model.AddServiceFragment"
         android:label="fragment_save_service"
-        tools:layout="@layout/fragment_save_service" >
+        tools:layout="@layout/fragment_add_service" >
         <action
             android:id="@+id/action_saveServiceFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

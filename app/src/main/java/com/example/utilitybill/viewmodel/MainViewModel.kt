@@ -15,11 +15,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return serviceDao.getServices()
     }
 
-    fun addService(name: String, tariff: Double, previousValue: Int) {
+    fun addService(name: String, tariff: Double, previousValue: Int, meterUnit: String) {
         val service = Service(
             name = name,
             tariff = tariff,
-            previousValue = previousValue
+            previousValue = previousValue,
+            unit = meterUnit
         )
         viewModelScope.launch {
             serviceDao.addService(service)

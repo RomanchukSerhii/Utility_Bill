@@ -25,4 +25,10 @@
     <string name="service_with_meter">%s: %d %s * %.2f = %d грн</string>
     <string name="service_without_meter">%s = %d грн</string>
     <string name="service_total">Разом: %d\nКарта для сплати комуналки - %s</string>
+    <string-array name="meter_unit_array">
+        <item>куб.</item>
+        <item>кВт</item>
+    </string-array>
+    <string name="try_again">Заповніть, будь-ласка поле</string>
+    <string name="cubic_meters">куб.</string>
 </resources>

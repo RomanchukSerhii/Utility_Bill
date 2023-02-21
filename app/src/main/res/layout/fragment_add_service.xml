@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".model.AddServiceFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNameService"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:hint="@string/service_name"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextNameService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_regular"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilServiceTariff"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:hint="@string/tariff"
+        android:layout_marginTop="16dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilNameService">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextServiceTariff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_regular"
+            android:inputType="numberDecimal"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/checkBoxMeterAvailability"
+        style="@style/CustomCheckbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Наявність лічильника"
+        android:fontFamily="@font/lato_regular"
+        android:textSize="15sp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        app:useMaterialThemeColors="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilServiceTariff"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPreviousServiceValue"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:hint="@string/previous_value"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tilMeterUnit"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxMeterAvailability">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPreviousServiceValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:fontFamily="@font/lato_regular"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilMeterUnit"
+        style="@style/MyDropDownMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tilPreviousServiceValue"
+        app:layout_constraintBottom_toBottomOf="@id/tilPreviousServiceValue">
+        
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteMeterUnit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:text="@string/cubic_meters"
+            android:fontFamily="@font/lato_regular"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonSaveService"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/lato_bold"
+        android:letterSpacing="0.01"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPreviousServiceValue" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
