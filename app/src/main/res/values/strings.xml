@@ -31,4 +31,5 @@
     </string-array>
     <string name="try_again">Заповніть, будь-ласка поле</string>
     <string name="cubic_meters">куб.</string>
+    <string name="edit_service_description">Редагування послуги</string>
 </resources>

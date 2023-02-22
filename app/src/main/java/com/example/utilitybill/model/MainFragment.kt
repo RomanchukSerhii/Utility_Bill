@@ -33,9 +33,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        serviceAdapter = ServiceAdapter { viewType, service ->
-            onListItemClicked(viewType, service)
-        }
+        serviceAdapter = ServiceAdapter(
+            { viewType, service -> onListItemClicked(viewType, service) },
+            { serviceId -> onEditServiceIconClicked(serviceId) }
+        )
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
         binding.buttonAddService.setOnClickListener { goToSaveService() }
@@ -75,6 +76,12 @@ class MainFragment : Fragment() {
             val isUsed = checkableLayout.isChecked
             viewModel.updateUsedStatus(service.id, isUsed)
         }
+    }
+
+    private fun onEditServiceIconClicked(serviceId: Int) {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId)
+        )
     }
 
 }

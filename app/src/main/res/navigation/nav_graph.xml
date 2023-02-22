@@ -13,14 +13,26 @@
         <action
             android:id="@+id/action_mainFragment_to_saveServiceFragment"
             app:destination="@id/saveServiceFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/saveServiceFragment"
-        android:name="com.example.utilitybill.model.AddServiceFragment"
+        android:name="com.example.utilitybill.model.SaveServiceFragment"
         android:label="fragment_save_service"
-        tools:layout="@layout/fragment_add_service" >
+        tools:layout="@layout/fragment_save_service" >
         <action
             android:id="@+id/action_saveServiceFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="service_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.utilitybill.model.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" />
 </navigation>

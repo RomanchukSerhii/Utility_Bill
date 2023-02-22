@@ -1,6 +1,7 @@
 package com.example.utilitybill.model
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +12,22 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
 import com.example.utilitybill.viewmodel.MainViewModel
-import com.example.utilitybill.databinding.FragmentAddServiceBinding
+import com.example.utilitybill.databinding.FragmentSaveServiceBinding
 import com.google.android.material.textfield.TextInputLayout
+import kotlin.properties.Delegates.notNull
 
-class AddServiceFragment : Fragment() {
-    private var _binding: FragmentAddServiceBinding? = null
-    private val binding: FragmentAddServiceBinding
+class SaveServiceFragment : Fragment() {
+    private var _binding: FragmentSaveServiceBinding? = null
+    private val binding: FragmentSaveServiceBinding
         get() = _binding ?: throw RuntimeException("FragmentSaveServiceBinding == null")
 
     private val viewModel: MainViewModel by activityViewModels()
+    private var serviceId by notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            serviceId = it.getInt(SERVICE_ID)
         }
     }
 
@@ -31,16 +35,44 @@ class AddServiceFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddServiceBinding.inflate(inflater, container, false)
+        _binding = FragmentSaveServiceBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            buttonSaveService.setOnClickListener {
-                saveService()
+        if (serviceId.isPositive()) bindFields()
+        bindListeners()
+        setAdapterToMeterUnit()
+        checkMeterAvailability()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun bindFields() {
+        viewModel.getService(serviceId).observe(viewLifecycleOwner) { service ->
+            binding.apply {
+                editTextNameService.setText(service.name)
+                editTextServiceTariff.setText(service.tariff.toString())
+                editTextPreviousServiceValue.setText(service.previousValue.toString())
+                autoCompleteMeterUnit.setText(service.unit)
+                viewModel.switchMeterCheck(service.isHasMeter)
             }
+        }
+    }
+
+    private fun bindListeners() {
+        binding.apply {
+            buttonSaveService.setOnClickListener { saveService() }
+
+            checkBoxMeterAvailability.setOnClickListener {
+                viewModel.switchMeterCheck(checkBoxMeterAvailability.isChecked)
+                checkMeterAvailability()
+            }
+
             editTextNameService.doOnTextChanged { text, _, _, _ ->
                 if (!text.isNullOrEmpty()) {
                     setErrorTextField(false, tilNameService)
@@ -52,13 +84,6 @@ class AddServiceFragment : Fragment() {
                 }
             }
         }
-        setAdapterToMeterUnit()
-        checkMeterAvailability()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setAdapterToMeterUnit() {
@@ -75,9 +100,9 @@ class AddServiceFragment : Fragment() {
 
     private fun checkMeterAvailability() {
         binding.apply {
-            checkBoxMeterAvailability.setOnClickListener {
-                val isMeterAvailable = checkBoxMeterAvailability.isChecked
-                if (isMeterAvailable) {
+            viewModel.isMeterChecked.observe(viewLifecycleOwner) { isMeterChecked ->
+                checkBoxMeterAvailability.isChecked = isMeterChecked
+                if (isMeterChecked) {
                     tilPreviousServiceValue.visibility = View.VISIBLE
                     autoCompleteMeterUnit.setText(R.string.cubic_meters)
                 } else {
@@ -99,17 +124,34 @@ class AddServiceFragment : Fragment() {
             if (previousValue.isBlank()) {
                 previousValue = resources.getString(R.string.zero)
             }
+            val isHasMeter = checkBoxMeterAvailability.isChecked
             val meterUnit = autoCompleteMeterUnit.text.toString()
 
-            checkFieldIsNotBlank(name, tariff)
-            if (name.isNotBlank() && tariff.isNotBlank()) {
-                viewModel.addService(name, tariff.toDouble(), previousValue.toInt(), meterUnit)
+            val isFieldsNotBlank = checkFieldIsNotBlank(name, tariff)
+            if (isFieldsNotBlank) {
+                if (serviceId.isPositive()) {
+                    viewModel.updateService(
+                        serviceId,
+                        name,
+                        tariff.toDouble(),
+                        previousValue.toInt(),
+                        isHasMeter,
+                        meterUnit
+                    )
+                } else {
+                    viewModel.addService(
+                        name,
+                        tariff.toDouble(),
+                        previousValue.toInt(),
+                        isHasMeter,
+                        meterUnit)
+                }
                 goToMainFragment()
             }
         }
     }
 
-    private fun checkFieldIsNotBlank(name: String, tariff: String) {
+    private fun checkFieldIsNotBlank(name: String, tariff: String): Boolean {
         binding.apply {
             if (name.isBlank()) {
                 setErrorTextField(true, tilNameService)
@@ -118,6 +160,7 @@ class AddServiceFragment : Fragment() {
                 setErrorTextField(true, tilServiceTariff)
             }
         }
+        return name.isNotBlank() && tariff.isNotBlank()
     }
 
     private fun setErrorTextField(
@@ -135,8 +178,11 @@ class AddServiceFragment : Fragment() {
 
     private fun goToMainFragment() {
         findNavController().navigate(
-            AddServiceFragmentDirections.actionSaveServiceFragmentToMainFragment()
+            SaveServiceFragmentDirections.actionSaveServiceFragmentToMainFragment()
         )
     }
 
+    companion object {
+        private const val SERVICE_ID = "service_id"
+    }
 }

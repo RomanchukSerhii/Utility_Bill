@@ -12,7 +12,8 @@ import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.ServiceItemBinding
 
 class ServiceAdapter(
-    private val onItemClicked: (view: View, service: Service) -> Unit
+    private val onItemClicked: (view: View, service: Service) -> Unit,
+    private val onEditServiceClicked: (serviceId: Int) -> Unit
 ) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceItemViewHolder {
@@ -26,7 +27,7 @@ class ServiceAdapter(
 
     override fun onBindViewHolder(holder: ServiceItemViewHolder, position: Int) {
         val currentService = getItem(position)
-        holder.bind(currentService, holder.itemView.context)
+        holder.bind(currentService, holder.itemView.context, onEditServiceClicked)
         holder.itemView.setOnClickListener {
             onItemClicked(holder.itemView, currentService)
         }
@@ -35,14 +36,34 @@ class ServiceAdapter(
     class ServiceItemViewHolder(
         private val binding: ServiceItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(service: Service, context: Context){
+        fun bind(
+            service: Service,
+            context: Context,
+            onEditServiceClicked: (serviceId: Int) -> Unit
+        ){
             binding.apply {
                 textViewServiceName.text = service.name
                 textViewServiceTariff.text = context.getString(
                     R.string.service_tariff,service.tariff.toFloat()
                 )
-                editTextPreviousValue.setText(service.previousValue.toString())
                 checkBoxUsed.isChecked = service.isUsed
+                if (service.isHasMeter) {
+                    switchValueMeterVisibility(View.VISIBLE)
+                    editTextPreviousValue.setText(service.previousValue.toString())
+                    editTextCurrentValue.setText(service.currentValue.toString())
+                } else {
+                    switchValueMeterVisibility(View.GONE)
+                }
+                imageViewEditService.setOnClickListener { onEditServiceClicked(service.id) }
+            }
+        }
+
+        private fun switchValueMeterVisibility(meterVisibility: Int) {
+            binding.apply {
+                textViewPreviousTitle.visibility = meterVisibility
+                textViewCurrentTitle.visibility = meterVisibility
+                editTextCurrentValue.visibility = meterVisibility
+                editTextPreviousValue.visibility = meterVisibility
             }
         }
     }

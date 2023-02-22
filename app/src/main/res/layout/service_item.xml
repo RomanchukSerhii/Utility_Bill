@@ -14,7 +14,8 @@
     <com.example.utilitybill.model.CheckableLayout
         android:id="@+id/checkable_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
 
         <CheckBox
             android:id="@+id/checkBoxUsed"
@@ -72,7 +73,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"
             android:contentDescription="@string/previous_service_value"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
@@ -88,19 +88,17 @@
             android:id="@+id/textViewCurrentTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="22dp"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/lato_regular"
             android:text="@string/current_title"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toEndOf="@id/guidelineCenter"
-            app:layout_constraintTop_toBottomOf="@id/textViewServiceTariff" />
+            app:layout_constraintTop_toTopOf="@id/textViewPreviousTitle" />
 
         <EditText
             android:id="@+id/editTextCurrentValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:contentDescription="@string/previous_service_value"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
@@ -111,6 +109,16 @@
             app:layout_constraintEnd_toStartOf="@id/guidelineEnd"
             app:layout_constraintStart_toEndOf="@id/guidelineCenter"
             app:layout_constraintTop_toBottomOf="@id/textViewPreviousTitle" />
+
+        <ImageView
+            android:id="@+id/imageViewEditService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_service"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@string/edit_service_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewServiceName"/>
 
 
         <androidx.constraintlayout.widget.Guideline
