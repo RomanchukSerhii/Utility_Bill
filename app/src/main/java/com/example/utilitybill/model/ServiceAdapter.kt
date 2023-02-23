@@ -13,7 +13,7 @@ import com.example.utilitybill.databinding.ServiceItemBinding
 
 class ServiceAdapter(
     private val onItemClicked: (view: View, service: Service) -> Unit,
-    private val onEditServiceClicked: (serviceId: Int) -> Unit
+    private val onEditServiceClicked: (serviceId: Int, isServiceUsed: Boolean) -> Unit
 ) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceItemViewHolder {
@@ -39,7 +39,7 @@ class ServiceAdapter(
         fun bind(
             service: Service,
             context: Context,
-            onEditServiceClicked: (serviceId: Int) -> Unit
+            onEditServiceClicked: (serviceId: Int, isServiceUsed: Boolean) -> Unit
         ){
             binding.apply {
                 textViewServiceName.text = service.name
@@ -54,7 +54,9 @@ class ServiceAdapter(
                 } else {
                     switchValueMeterVisibility(View.GONE)
                 }
-                imageViewEditService.setOnClickListener { onEditServiceClicked(service.id) }
+                imageViewEditService.setOnClickListener {
+                    onEditServiceClicked(service.id, service.isUsed)
+                }
             }
         }
 

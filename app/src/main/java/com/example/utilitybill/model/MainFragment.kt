@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { serviceId -> onEditServiceIconClicked(serviceId) }
+            { serviceId, isServiceUsed -> onEditServiceIconClicked(serviceId, isServiceUsed) }
         )
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
@@ -78,9 +78,9 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onEditServiceIconClicked(serviceId: Int) {
+    private fun onEditServiceIconClicked(serviceId: Int, isServiceUsed: Boolean) {
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId)
+            MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)
         )
     }
 

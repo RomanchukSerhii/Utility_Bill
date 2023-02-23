@@ -1,10 +1,7 @@
 package com.example.utilitybill.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.database.ServiceDatabase
 import kotlinx.coroutines.launch
@@ -28,7 +25,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _isMeterChecked.value = isChecked
     }
 
-    fun addService(name: String, tariff: Double, previousValue: Int, isHasMeter: Boolean, meterUnit: String) {
+    fun addService(
+        name: String,
+        tariff: Double,
+        previousValue: Int,
+        isHasMeter: Boolean,
+        meterUnit: String
+    ) {
         val service = Service(
             name = name,
             tariff = tariff,
@@ -46,14 +49,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         name: String,
         tariff: Double,
         previousValue: Int,
+        isServiceUsed: Boolean,
         isHasMeter: Boolean,
         meterUnit: String
     ) {
-        val service = Service(
+        val service = Service (
             id = serviceId,
             name = name,
             tariff = tariff,
             previousValue = previousValue,
+            isUsed = isServiceUsed,
             isHasMeter = isHasMeter,
             unit = meterUnit
         )

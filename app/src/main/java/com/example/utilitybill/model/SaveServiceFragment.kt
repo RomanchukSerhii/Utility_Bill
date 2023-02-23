@@ -11,6 +11,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
+import com.example.utilitybill.database.Service
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.databinding.FragmentSaveServiceBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -22,12 +23,14 @@ class SaveServiceFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentSaveServiceBinding == null")
 
     private val viewModel: MainViewModel by activityViewModels()
+    private var isServiceUsed by notNull<Boolean>()
     private var serviceId by notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             serviceId = it.getInt(SERVICE_ID)
+            isServiceUsed = it.getBoolean(IS_SERVICE_USED)
         }
     }
 
@@ -135,6 +138,7 @@ class SaveServiceFragment : Fragment() {
                         name,
                         tariff.toDouble(),
                         previousValue.toInt(),
+                        isServiceUsed,
                         isHasMeter,
                         meterUnit
                     )
@@ -184,5 +188,6 @@ class SaveServiceFragment : Fragment() {
 
     companion object {
         private const val SERVICE_ID = "service_id"
+        private const val IS_SERVICE_USED = "is_service_used"
     }
 }
