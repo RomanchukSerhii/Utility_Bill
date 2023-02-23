@@ -8,6 +8,7 @@ import com.example.utilitybill.R
 import com.example.utilitybill.databinding.ActivityMainBinding
 
 fun Int.isPositive() = this >= 0
+fun String.trimZero() = if (this.length > 1) this.trim().trimStart('0') else this
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

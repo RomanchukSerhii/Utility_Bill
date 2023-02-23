@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -35,7 +36,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { serviceId, isServiceUsed -> onEditServiceIconClicked(serviceId, isServiceUsed) }
+            { viewType, serviceId, isServiceUsed -> onEditServiceIconClicked(viewType, serviceId, isServiceUsed) }
         )
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
@@ -78,7 +79,14 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onEditServiceIconClicked(serviceId: Int, isServiceUsed: Boolean) {
+    private fun onEditServiceIconClicked(
+        editTextPreviousValue: EditText,
+        serviceId: Int,
+        isServiceUsed: Boolean
+    ) {
+        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+        viewModel.updateMeterValue(serviceId, previousValue)
+
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)
         )

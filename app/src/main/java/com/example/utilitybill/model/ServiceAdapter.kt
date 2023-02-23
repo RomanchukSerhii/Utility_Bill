@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,7 @@ import com.example.utilitybill.databinding.ServiceItemBinding
 
 class ServiceAdapter(
     private val onItemClicked: (view: View, service: Service) -> Unit,
-    private val onEditServiceClicked: (serviceId: Int, isServiceUsed: Boolean) -> Unit
+    private val onEditServiceClicked: (editText: EditText, serviceId: Int, isServiceUsed: Boolean) -> Unit
 ) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceItemViewHolder {
@@ -39,7 +40,7 @@ class ServiceAdapter(
         fun bind(
             service: Service,
             context: Context,
-            onEditServiceClicked: (serviceId: Int, isServiceUsed: Boolean) -> Unit
+            onEditServiceClicked: (editText: EditText, serviceId: Int, isServiceUsed: Boolean) -> Unit
         ){
             binding.apply {
                 textViewServiceName.text = service.name
@@ -55,7 +56,7 @@ class ServiceAdapter(
                     switchValueMeterVisibility(View.GONE)
                 }
                 imageViewEditService.setOnClickListener {
-                    onEditServiceClicked(service.id, service.isUsed)
+                    onEditServiceClicked(editTextPreviousValue, service.id, service.isUsed)
                 }
             }
         }

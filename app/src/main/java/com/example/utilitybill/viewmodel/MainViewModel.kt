@@ -73,6 +73,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updateMeterValue(id: Int, previousValue: Int) {
+        viewModelScope.launch {
+            serviceDao.changeValues(id, previousValue)
+        }
+    }
+
     fun removeService(id: Int) {
         viewModelScope.launch {
             serviceDao.removeService(id)
