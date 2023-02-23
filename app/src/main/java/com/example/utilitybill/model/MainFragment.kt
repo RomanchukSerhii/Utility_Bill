@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
+import com.google.android.material.textfield.TextInputLayout
 
 
 class MainFragment : Fragment() {
@@ -36,7 +38,12 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { viewType, serviceId, isServiceUsed -> onEditServiceIconClicked(viewType, serviceId, isServiceUsed) }
+            { viewType, serviceId, isServiceUsed ->
+                onEditServiceIconClicked(viewType, serviceId, isServiceUsed)
+            },
+            { editTextPreviousValue, editTextCurrentValue ->
+                currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
+            }
         )
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
@@ -92,4 +99,33 @@ class MainFragment : Fragment() {
         )
     }
 
+    private fun currentValueErrorListener(
+        editTextPreviousValue: EditText,
+        editTextCurrentValue: EditText
+    ) {
+        var currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+        var previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+        editTextCurrentValue.doOnTextChanged { text, _, _, _ ->
+            currentValue = text.toString().trimZero().toInt()
+            val isCurrentValueValid = currentValue >= previousValue
+            setCurrentValueError(isCurrentValueValid, editTextCurrentValue)
+        }
+        editTextPreviousValue.doOnTextChanged { text, _, _, _ ->
+            previousValue = text.toString().trimZero().toInt()
+            val isCurrentValueValid = currentValue >= previousValue
+            setCurrentValueError(isCurrentValueValid, editTextCurrentValue)
+        }
+    }
+
+    private fun setCurrentValueError(
+        isCurrentValueValid: Boolean,
+        editTextCurrentValue: EditText
+    ) {
+        if (isCurrentValueValid) {
+            editTextCurrentValue.error = null
+        } else {
+            editTextCurrentValue.error = resources.getString(R.string.current_value_error)
+        }
+
+    }
 }

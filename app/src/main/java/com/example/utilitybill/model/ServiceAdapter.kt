@@ -14,7 +14,15 @@ import com.example.utilitybill.databinding.ServiceItemBinding
 
 class ServiceAdapter(
     private val onItemClicked: (view: View, service: Service) -> Unit,
-    private val onEditServiceClicked: (editText: EditText, serviceId: Int, isServiceUsed: Boolean) -> Unit
+    private val onEditServiceClicked: (
+        editText: EditText,
+        serviceId: Int,
+        isServiceUsed: Boolean
+    ) -> Unit,
+    private val currentValueErrorListener: (
+        editTextPreviousValue: EditText,
+        editTextCurrentValue: EditText
+    ) -> Unit
 ) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServiceItemViewHolder {
@@ -28,7 +36,12 @@ class ServiceAdapter(
 
     override fun onBindViewHolder(holder: ServiceItemViewHolder, position: Int) {
         val currentService = getItem(position)
-        holder.bind(currentService, holder.itemView.context, onEditServiceClicked)
+        holder.bind(
+            currentService,
+            holder.itemView.context,
+            onEditServiceClicked,
+            currentValueErrorListener
+        )
         holder.itemView.setOnClickListener {
             onItemClicked(holder.itemView, currentService)
         }
@@ -40,12 +53,21 @@ class ServiceAdapter(
         fun bind(
             service: Service,
             context: Context,
-            onEditServiceClicked: (editText: EditText, serviceId: Int, isServiceUsed: Boolean) -> Unit
-        ){
+            onEditServiceClicked: (
+                editText: EditText,
+                serviceId: Int,
+                isServiceUsed: Boolean
+            ) -> Unit,
+            currentValueErrorListener: (
+                editTextPreviousValue: EditText,
+                editTextCurrentValue: EditText
+            ) -> Unit
+        ) {
+
             binding.apply {
                 textViewServiceName.text = service.name
                 textViewServiceTariff.text = context.getString(
-                    R.string.service_tariff,service.tariff.toFloat()
+                    R.string.service_tariff, service.tariff.toFloat()
                 )
                 checkBoxUsed.isChecked = service.isUsed
                 if (service.isHasMeter) {
@@ -58,6 +80,7 @@ class ServiceAdapter(
                 imageViewEditService.setOnClickListener {
                     onEditServiceClicked(editTextPreviousValue, service.id, service.isUsed)
                 }
+                currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
             }
         }
 
