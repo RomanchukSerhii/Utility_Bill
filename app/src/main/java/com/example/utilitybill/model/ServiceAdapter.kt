@@ -15,7 +15,7 @@ import com.example.utilitybill.databinding.ServiceItemBinding
 class ServiceAdapter(
     private val onItemClicked: (view: View, service: Service) -> Unit,
     private val onEditServiceClicked: (
-        editText: EditText,
+        previousValue: Int,
         serviceId: Int,
         isServiceUsed: Boolean
     ) -> Unit,
@@ -54,7 +54,7 @@ class ServiceAdapter(
             service: Service,
             context: Context,
             onEditServiceClicked: (
-                editText: EditText,
+                previousValue: Int,
                 serviceId: Int,
                 isServiceUsed: Boolean
             ) -> Unit,
@@ -77,8 +77,10 @@ class ServiceAdapter(
                 } else {
                     switchValueMeterVisibility(View.GONE)
                 }
+
                 imageViewEditService.setOnClickListener {
-                    onEditServiceClicked(editTextPreviousValue, service.id, service.isUsed)
+                    val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+                    onEditServiceClicked(previousValue, service.id, service.isUsed)
                 }
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
             }

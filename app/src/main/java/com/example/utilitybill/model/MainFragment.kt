@@ -1,6 +1,7 @@
 package com.example.utilitybill.model
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,8 +39,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { viewType, serviceId, isServiceUsed ->
-                onEditServiceIconClicked(viewType, serviceId, isServiceUsed)
+            { previousValue, serviceId, isServiceUsed ->
+                onEditServiceIconClicked(previousValue, serviceId, isServiceUsed)
             },
             { editTextPreviousValue, editTextCurrentValue ->
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
@@ -87,11 +88,10 @@ class MainFragment : Fragment() {
     }
 
     private fun onEditServiceIconClicked(
-        editTextPreviousValue: EditText,
+        previousValue: Int,
         serviceId: Int,
         isServiceUsed: Boolean
     ) {
-        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
         viewModel.updateMeterValue(serviceId, previousValue)
 
         findNavController().navigate(
