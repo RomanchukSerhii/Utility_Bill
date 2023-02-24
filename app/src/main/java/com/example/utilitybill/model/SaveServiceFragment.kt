@@ -62,6 +62,7 @@ class SaveServiceFragment : Fragment() {
                 editTextServiceTariff.setText(service.tariff.toString())
                 editTextPreviousServiceValue.setText(service.previousValue.toString())
                 autoCompleteMeterUnit.setText(service.unit)
+                buttonDeleteService.visibility = View.VISIBLE
                 viewModel.switchMeterCheck(service.isHasMeter)
             }
         }
@@ -70,6 +71,7 @@ class SaveServiceFragment : Fragment() {
     private fun bindListeners() {
         binding.apply {
             buttonSaveService.setOnClickListener { saveService() }
+            buttonDeleteService.setOnClickListener { deleteService() }
 
             checkBoxMeterAvailability.setOnClickListener {
                 viewModel.switchMeterCheck(checkBoxMeterAvailability.isChecked)
@@ -153,6 +155,11 @@ class SaveServiceFragment : Fragment() {
                 goToMainFragment()
             }
         }
+    }
+
+    private fun deleteService() {
+        viewModel.removeService(serviceId)
+        goToMainFragment()
     }
 
     private fun checkFieldIsNotBlank(name: String, tariff: String): Boolean {

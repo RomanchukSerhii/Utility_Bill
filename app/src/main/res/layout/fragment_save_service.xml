@@ -107,6 +107,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/buttonDeleteService"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/lato_bold"
+        android:letterSpacing="0.01"
+        android:text="@string/delete_service"
+        android:textAllCaps="false"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPreviousServiceValue" />
+
+    <Button
         android:id="@+id/buttonSaveService"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -121,7 +138,7 @@
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilPreviousServiceValue" />
+        app:layout_constraintTop_toBottomOf="@id/buttonDeleteService" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
