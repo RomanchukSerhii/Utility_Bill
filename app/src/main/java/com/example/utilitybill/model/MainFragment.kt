@@ -39,8 +39,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { previousValue, currentValue, serviceId, isServiceUsed ->
-                onEditServiceIconClicked(previousValue, currentValue, serviceId, isServiceUsed)
+            { viewType, serviceId, isServiceUsed ->
+                onEditServiceIconClicked(viewType, serviceId, isServiceUsed)
             },
             { editTextPreviousValue, editTextCurrentValue ->
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
@@ -79,13 +79,10 @@ class MainFragment : Fragment() {
     }
 
     private fun onListItemClicked(view: View, service: Service) {
+        saveMeterValue(view, service.id)
         val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
+
         if (checkableLayout != null) {
-            val editTextPreviousValue = checkableLayout.findViewById<EditText>(R.id.editTextPreviousValue)
-            val editTextCurrentValue = checkableLayout.findViewById<EditText>(R.id.editTextCurrentValue)
-            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
-            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
-            viewModel.updateMeterValue(service.id, previousValue, currentValue)
             checkableLayout.toggle()
             val isUsed = checkableLayout.isChecked
             viewModel.updateUsedStatus(service.id, isUsed)
@@ -93,16 +90,23 @@ class MainFragment : Fragment() {
     }
 
     private fun onEditServiceIconClicked(
-        previousValue: Int,
-        currentValue: Int,
+        view: View,
         serviceId: Int,
         isServiceUsed: Boolean
     ) {
-        viewModel.updateMeterValue(serviceId, previousValue, currentValue)
+        saveMeterValue(view, serviceId)
 
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)
         )
+    }
+
+    private fun saveMeterValue(view: View, serviceId: Int) {
+        val editTextPreviousValue = view.findViewById<EditText>(R.id.editTextPreviousValue)
+        val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
+        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+        val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+        viewModel.updateMeterValue(serviceId, previousValue, currentValue)
     }
 
     private fun currentValueErrorListener(
