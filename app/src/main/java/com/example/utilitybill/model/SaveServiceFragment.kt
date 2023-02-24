@@ -61,7 +61,7 @@ class SaveServiceFragment : Fragment() {
                 editTextNameService.setText(service.name)
                 editTextServiceTariff.setText(service.tariff.toString())
                 editTextPreviousServiceValue.setText(service.previousValue.toString())
-                autoCompleteMeterUnit.setText(service.unit)
+//                autoCompleteMeterUnit.setText(service.unit)
                 buttonDeleteService.visibility = View.VISIBLE
                 viewModel.switchMeterCheck(service.isHasMeter)
             }
@@ -93,7 +93,6 @@ class SaveServiceFragment : Fragment() {
 
     private fun setAdapterToMeterUnit() {
         val meterUnitList = resources.getStringArray(R.array.meter_unit_array)
-
         val unitAdapter = ArrayAdapter(
             requireContext(),
             R.layout.dropdown_item,
@@ -109,11 +108,11 @@ class SaveServiceFragment : Fragment() {
                 checkBoxMeterAvailability.isChecked = isMeterChecked
                 if (isMeterChecked) {
                     tilPreviousServiceValue.visibility = View.VISIBLE
-                    autoCompleteMeterUnit.setText(R.string.cubic_meters)
+//                    autoCompleteMeterUnit.setText(R.string.cubic_meters)
                 } else {
                     tilPreviousServiceValue.visibility = View.GONE
                     editTextPreviousServiceValue.setText(R.string.zero)
-                    autoCompleteMeterUnit.setText("")
+//                    autoCompleteMeterUnit.setText("")
                 }
             }
         }
