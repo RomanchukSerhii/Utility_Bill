@@ -73,9 +73,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateMeterValue(id: Int, previousValue: Int) {
+    fun updateMeterValue(id: Int, previousValue: Int, currentValue: Int) {
         viewModelScope.launch {
-            serviceDao.changeValues(id, previousValue)
+            serviceDao.changeValues(id, previousValue, currentValue)
         }
     }
 

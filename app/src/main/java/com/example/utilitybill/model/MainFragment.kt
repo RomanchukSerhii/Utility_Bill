@@ -39,8 +39,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
-            { previousValue, serviceId, isServiceUsed ->
-                onEditServiceIconClicked(previousValue, serviceId, isServiceUsed)
+            { previousValue, currentValue, serviceId, isServiceUsed ->
+                onEditServiceIconClicked(previousValue, currentValue, serviceId, isServiceUsed)
             },
             { editTextPreviousValue, editTextCurrentValue ->
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
@@ -81,6 +81,11 @@ class MainFragment : Fragment() {
     private fun onListItemClicked(view: View, service: Service) {
         val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
         if (checkableLayout != null) {
+            val editTextPreviousValue = checkableLayout.findViewById<EditText>(R.id.editTextPreviousValue)
+            val editTextCurrentValue = checkableLayout.findViewById<EditText>(R.id.editTextCurrentValue)
+            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+            viewModel.updateMeterValue(service.id, previousValue, currentValue)
             checkableLayout.toggle()
             val isUsed = checkableLayout.isChecked
             viewModel.updateUsedStatus(service.id, isUsed)
@@ -89,10 +94,11 @@ class MainFragment : Fragment() {
 
     private fun onEditServiceIconClicked(
         previousValue: Int,
+        currentValue: Int,
         serviceId: Int,
         isServiceUsed: Boolean
     ) {
-        viewModel.updateMeterValue(serviceId, previousValue)
+        viewModel.updateMeterValue(serviceId, previousValue, currentValue)
 
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)

@@ -51,6 +51,6 @@ interface ServiceDao {
     @Query("UPDATE service SET is_has_meter = :isHasMeter WHERE id = :id")
     suspend fun changeMeterAvailability(id: Int, isHasMeter: Boolean)
 
-    @Query("UPDATE service SET previous_value = :previousValue WHERE id = :id")
-    suspend fun changeValues(id: Int, previousValue: Int)
+    @Query("UPDATE service SET previous_value = :previousValue, current_value = :currentValue WHERE id = :id")
+    suspend fun changeValues(id: Int, previousValue: Int, currentValue: Int)
 }

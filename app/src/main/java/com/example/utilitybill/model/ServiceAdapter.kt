@@ -16,6 +16,7 @@ class ServiceAdapter(
     private val onItemClicked: (view: View, service: Service) -> Unit,
     private val onEditServiceClicked: (
         previousValue: Int,
+        currentValue: Int,
         serviceId: Int,
         isServiceUsed: Boolean
     ) -> Unit,
@@ -55,6 +56,7 @@ class ServiceAdapter(
             context: Context,
             onEditServiceClicked: (
                 previousValue: Int,
+                currentValue: Int,
                 serviceId: Int,
                 isServiceUsed: Boolean
             ) -> Unit,
@@ -80,7 +82,8 @@ class ServiceAdapter(
 
                 imageViewEditService.setOnClickListener {
                     val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
-                    onEditServiceClicked(previousValue, service.id, service.isUsed)
+                    val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+                    onEditServiceClicked(previousValue, currentValue, service.id, service.isUsed)
                 }
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
             }
