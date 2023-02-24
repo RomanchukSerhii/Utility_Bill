@@ -19,7 +19,6 @@ class ResultFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentResultBinding == false")
 
     private val viewModel: MainViewModel by activityViewModels()
-    private lateinit var services: List<Service>
     private lateinit var cardNumber: String
 
     override fun onCreateView(
@@ -32,10 +31,11 @@ class ResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getServices().observe(viewLifecycleOwner) {
-            services = it
+        cardNumber ="0000"
+        viewModel.getServices().observe(viewLifecycleOwner) { services ->
+            val bill = createBill(services)
+            binding.textViewBill.text = bill
         }
-        val bill = createBill()
     }
 
     override fun onDestroyView() {
@@ -43,7 +43,7 @@ class ResultFragment : Fragment() {
         _binding = null
     }
 
-    private fun createBill(): String {
+    private fun createBill(services: List<Service>): String {
         val stringBuilder = StringBuilder(getString(R.string.bill_title))
         var total = 0
         services.forEach { service ->

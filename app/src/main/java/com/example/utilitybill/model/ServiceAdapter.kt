@@ -50,6 +50,7 @@ class ServiceAdapter(
     class ServiceItemViewHolder(
         private val binding: ServiceItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(
             service: Service,
             context: Context,
@@ -63,12 +64,12 @@ class ServiceAdapter(
                 editTextCurrentValue: EditText
             ) -> Unit
         ) {
-
             binding.apply {
                 textViewServiceName.text = service.name
                 textViewServiceTariff.text = context.getString(
                     R.string.service_tariff, service.tariff.toFloat()
                 )
+                textViewServiceId.text = service.id.toString()
                 checkBoxUsed.isChecked = service.isUsed
                 if (service.isHasMeter) {
                     switchValueMeterVisibility(View.VISIBLE)

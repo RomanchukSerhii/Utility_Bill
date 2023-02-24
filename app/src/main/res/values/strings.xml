@@ -21,8 +21,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="copy_bill">Copy bill</string>
     <string name="bill">Рахунок:</string>
-    <string name="bill_title">Підрахував комуналку:</string>
-    <string name="service_with_meter">%s: %d %s * %.2f = %d грн</string>
+    <string name="bill_title">Підрахував комуналку:\n</string>
+    <string name="service_with_meter">%s: %d %s * %.2f = %d грн\n</string>
     <string name="service_without_meter">%s = %d грн</string>
     <string name="service_total">Разом: %d\nКарта для сплати комуналки - %s</string>
     <string-array name="meter_unit_array">

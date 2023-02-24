@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -15,6 +16,7 @@ import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -24,8 +26,6 @@ class MainFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentMainBinding == null")
     private lateinit var serviceAdapter: ServiceAdapter
     private val viewModel: MainViewModel by activityViewModels()
-
-    private lateinit var servicesList: List<Service>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +49,7 @@ class MainFragment : Fragment() {
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
         binding.buttonAddService.setOnClickListener { goToSaveService() }
-        binding.buttonCreateBill.setOnClickListener { goToResult(servicesList) }
+        binding.buttonCreateBill.setOnClickListener { goToResult() }
     }
 
     override fun onDestroyView() {
@@ -65,17 +65,23 @@ class MainFragment : Fragment() {
 
     private fun observeViewModels() {
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
-            servicesList = services
             serviceAdapter.submitList(services)
         }
     }
 
-    private fun goToResult(services: List<Service>) {
-        val stringBuilder = StringBuilder()
-        services.forEach { service ->
-            stringBuilder.append("${service.name} - ${service.isUsed}\n")
+    private fun goToResult() {
+        val recyclerView = binding.recyclerView
+        for (i in 0 until recyclerView.childCount) {
+            val child = recyclerView.getChildAt(i)
+            if (child is MaterialCardView) {
+                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
+                val serviceId = textViewServiceId.text.toString().toInt()
+                saveMeterValue(child, serviceId)
+            }
         }
-        Toast.makeText(requireActivity(), stringBuilder, Toast.LENGTH_SHORT).show()
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToResultFragment()
+        )
     }
 
     private fun onListItemClicked(view: View, service: Service) {
