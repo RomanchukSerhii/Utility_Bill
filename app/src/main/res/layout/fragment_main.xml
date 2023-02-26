@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".model.MainFragment">
@@ -11,64 +10,90 @@
         android:id="@+id/constraintHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:background="@drawable/gradient_background"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textViewCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card_title"
             android:fontFamily="@font/lato_regular"
+            android:text="@string/card_title"
             android:textColor="@color/extra_light_blue"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewCardNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card_number"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/lato_regular"
             android:textColor="@color/white"
-            android:layout_marginTop="4dp"
+            tools:text="0000 0000 0000 0000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewCardTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewCardTitle" />
+
+        <EditText
+            android:id="@+id/editTextCardNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-4dp"
+            android:layout_marginTop="-6dp"
+            android:fontFamily="@font/lato_regular"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCardTitle" />
 
         <TextView
             android:id="@+id/textViewMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Month"
+            android:layout_marginTop="34dp"
             android:fontFamily="@font/lato_regular"
+            android:text="@string/Month"
             android:textColor="@color/extra_light_blue"
-            android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewCardNumber"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewCardTitle" />
 
         <TextView
             android:id="@+id/textViewMonthName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/month_name"
-            android:fontFamily="@font/lato_regular"
-            android:textColor="@color/white"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/lato_regular"
+            android:text="@string/month_name"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewMonth"/>
+            app:layout_constraintTop_toBottomOf="@id/textViewMonth" />
 
         <ImageView
             android:id="@+id/imageViewEditCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_round_edit"
             android:contentDescription="@string/edit_card_button"
+            android:src="@drawable/ic_round_edit"
+            app:layout_constraintBottom_toBottomOf="@id/textViewCardNumber"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/textViewCardTitle"
-            app:layout_constraintBottom_toBottomOf="@id/textViewCardNumber"/>
+            app:layout_constraintTop_toTopOf="@id/textViewCardTitle" />
+
+        <ImageView
+            android:id="@+id/imageViewEditCardDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/edit_card_button"
+            android:src="@drawable/ic_done"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/editTextCardNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewCardTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,12 +101,12 @@
         android:id="@+id/textViewChooseTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_title"
-        android:fontFamily="@font/lato_regular"
-        android:textColor="@color/dark_gray"
         android:layout_margin="16dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/choose_title"
+        android:textColor="@color/dark_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintHeader"/>
+        app:layout_constraintTop_toBottomOf="@id/constraintHeader" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -114,15 +139,15 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:text="@string/create_bill"
-        android:textSize="16sp"
-        android:fontFamily="@font/lato_bold"
-        android:textAllCaps="false"
         android:background="@drawable/button_background"
+        android:fontFamily="@font/lato_bold"
         android:letterSpacing="0.01"
+        android:text="@string/create_bill"
+        android:textAllCaps="false"
+        android:textSize="16sp"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

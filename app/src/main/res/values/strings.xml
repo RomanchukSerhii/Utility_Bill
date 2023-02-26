@@ -32,6 +32,7 @@
     <string name="try_again">Заповніть, будь-ласка поле</string>
     <string name="cubic_meters">куб.</string>
     <string name="edit_service_description">Редагування послуги</string>
-    <string name="current_value_error">Поточне значення має бути більшим від попереднього або дорівнювати йому</string>
+    <string name="current_value_error">Поточне значення має бути більшим від попереднього або дорівнювати йому!</string>
+    <string name="card_number_value_error">Поле має містити 12 символів!</string>
     <string name="delete_service">Видалити послугу</string>
 </resources>
