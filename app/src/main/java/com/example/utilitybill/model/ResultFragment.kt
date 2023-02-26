@@ -1,11 +1,16 @@
 package com.example.utilitybill.model
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
@@ -35,6 +40,17 @@ class ResultFragment : Fragment() {
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
             val bill = createBill(services)
             binding.textViewBill.text = bill
+        }
+
+        binding.imageViewCopy.setOnClickListener {
+            val textOfBill = binding.textViewBill.text.toString()
+            val clipboardManager = requireActivity()
+                .getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("label", textOfBill)
+            clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(
+                requireContext(), getString(R.string.clipboard_text), Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

@@ -39,4 +39,5 @@
     <string name="alert_message_delete_service">Всі данні про послугу будуть видалені.</string>
     <string name="alert_message_cancel">Відхилити</string>
     <string name="alert_message_accept">Підтвердити</string>
+    <string name="clipboard_text">Рахунок скопійовано до буфера обміну</string>
 </resources>
