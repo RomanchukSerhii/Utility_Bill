@@ -14,6 +14,7 @@ import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.databinding.FragmentSaveServiceBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import kotlin.properties.Delegates.notNull
 
@@ -61,7 +62,6 @@ class SaveServiceFragment : Fragment() {
                 editTextNameService.setText(service.name)
                 editTextServiceTariff.setText(service.tariff.toString())
                 editTextPreviousServiceValue.setText(service.previousValue.toString())
-//                autoCompleteMeterUnit.setText(service.unit)
                 buttonDeleteService.visibility = View.VISIBLE
                 viewModel.switchMeterCheck(service.isHasMeter)
             }
@@ -108,11 +108,9 @@ class SaveServiceFragment : Fragment() {
                 checkBoxMeterAvailability.isChecked = isMeterChecked
                 if (isMeterChecked) {
                     tilPreviousServiceValue.visibility = View.VISIBLE
-//                    autoCompleteMeterUnit.setText(R.string.cubic_meters)
                 } else {
                     tilPreviousServiceValue.visibility = View.GONE
                     editTextPreviousServiceValue.setText(R.string.zero)
-//                    autoCompleteMeterUnit.setText("")
                 }
             }
         }
@@ -157,8 +155,18 @@ class SaveServiceFragment : Fragment() {
     }
 
     private fun deleteService() {
-        viewModel.removeService(serviceId)
-        goToMainFragment()
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.alert_title_delete_service))
+            .setMessage(getString(R.string.alert_message_delete_service))
+            .setCancelable(true)
+            .setNegativeButton(getString(R.string.alert_message_cancel)) { _, _ ->
+
+            }
+            .setPositiveButton(getString(R.string.alert_message_accept)) { _, _ ->
+                viewModel.removeService(serviceId)
+                goToMainFragment()
+            }
+            .show()
     }
 
     private fun checkFieldIsNotBlank(name: String, tariff: String): Boolean {

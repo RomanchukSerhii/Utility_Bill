@@ -35,4 +35,8 @@
     <string name="current_value_error">Поточне значення має бути більшим від попереднього або дорівнювати йому!</string>
     <string name="card_number_value_error">Поле має містити 12 символів!</string>
     <string name="delete_service">Видалити послугу</string>
+    <string name="alert_title_delete_service">Видалити послугу?</string>
+    <string name="alert_message_delete_service">Всі данні про послугу будуть видалені.</string>
+    <string name="alert_message_cancel">Відхилити</string>
+    <string name="alert_message_accept">Підтвердити</string>
 </resources>
