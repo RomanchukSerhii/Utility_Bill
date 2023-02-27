@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -57,6 +59,9 @@ class SaveServiceFragment : Fragment() {
     }
 
     private fun bindFields() {
+        (requireActivity() as AppCompatActivity).supportActionBar?.setTitle(
+            R.string.edit_service_title
+        )
         viewModel.getService(serviceId).observe(viewLifecycleOwner) { service ->
             binding.apply {
                 editTextNameService.setText(service.name)

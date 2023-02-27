@@ -40,4 +40,7 @@
     <string name="alert_message_cancel">Відхилити</string>
     <string name="alert_message_accept">Підтвердити</string>
     <string name="clipboard_text">Рахунок скопійовано до буфера обміну</string>
+    <string name="add_service_title">Додати нову послугу</string>
+    <string name="edit_service_title">Змінити деталі послуги</string>
+    <string name="result_title">Рахунок</string>
 </resources>
