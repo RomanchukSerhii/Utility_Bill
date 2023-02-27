@@ -183,12 +183,28 @@ class MainFragment : Fragment() {
             if (child is MaterialCardView) {
                 val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
                 val serviceId = textViewServiceId.text.toString().toInt()
-                saveMeterValue(child, serviceId)
+                if (!saveMeterValue(child, serviceId)) return
             }
         }
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToResultFragment()
         )
+    }
+
+    private fun saveMeterValue(view: View, serviceId: Int): Boolean {
+        val editTextPreviousValue = view.findViewById<EditText>(R.id.editTextPreviousValue)
+        val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
+        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+        val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+        return if (currentValue - previousValue < 0) {
+            editTextCurrentValue.error = getString(R.string.current_value_error)
+            editTextCurrentValue.requestFocus()
+            editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
+            false
+        } else {
+            viewModel.updateMeterValue(serviceId, previousValue, currentValue)
+            true
+        }
     }
 
     private fun onListItemClicked(view: View, service: Service) {
@@ -212,14 +228,6 @@ class MainFragment : Fragment() {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)
         )
-    }
-
-    private fun saveMeterValue(view: View, serviceId: Int) {
-        val editTextPreviousValue = view.findViewById<EditText>(R.id.editTextPreviousValue)
-        val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
-        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
-        val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
-        viewModel.updateMeterValue(serviceId, previousValue, currentValue)
     }
 
     private fun currentValueErrorListener(
