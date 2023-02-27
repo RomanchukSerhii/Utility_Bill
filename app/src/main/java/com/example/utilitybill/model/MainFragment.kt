@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
@@ -65,8 +66,12 @@ class MainFragment : Fragment() {
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
             }
         )
+
+        val itemTouchHelperCallback = ItemTouchHelperCallback(serviceAdapter)
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         observeViewModels()
         binding.recyclerView.adapter = serviceAdapter
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
         setListeners()
     }
 
