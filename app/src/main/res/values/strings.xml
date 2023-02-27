@@ -22,9 +22,10 @@
     <string name="copy_bill">Copy bill</string>
     <string name="bill">Рахунок:</string>
     <string name="bill_title">Підрахував комуналку:\n</string>
-    <string name="service_with_meter">%s: %d %s * %.2f = %d грн\n</string>
+    <string name="service_with_meter_int_tariff_value">%s: %d %s * %d грн = %d грн\n</string>
+    <string name="service_with_meter_double_tariff_value">%s: %d %s * %.2f грн = %d грн\n</string>
     <string name="service_without_meter">%s = %.2f грн\n</string>
-    <string name="service_total">Разом: %d\nКарта для сплати комуналки - %s</string>
+    <string name="service_total">Разом: %d грн\nКарта для сплати комуналки - %s</string>
     <string-array name="meter_unit_array">
         <item>куб.</item>
         <item>кВт</item>
@@ -43,4 +44,5 @@
     <string name="add_service_title">Додати нову послугу</string>
     <string name="edit_service_title">Змінити деталі послуги</string>
     <string name="result_title">Рахунок</string>
+    <string name="default_card_number">0000 0000 0000 0000</string>
 </resources>

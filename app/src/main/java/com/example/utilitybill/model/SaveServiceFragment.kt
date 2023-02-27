@@ -18,6 +18,7 @@ import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.databinding.FragmentSaveServiceBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
+import java.util.*
 import kotlin.properties.Delegates.notNull
 
 class SaveServiceFragment : Fragment() {
@@ -123,7 +124,7 @@ class SaveServiceFragment : Fragment() {
 
     private fun saveService() {
         binding.apply {
-            val name = editTextNameService.text.toString().trim()
+            val name = editTextNameService.text.toString().trim().replaceFirstChar { it.uppercase() }
             val tariff = editTextServiceTariff.text.toString().trim()
             var previousValue = editTextPreviousServiceValue.text.toString()
                 .trim()

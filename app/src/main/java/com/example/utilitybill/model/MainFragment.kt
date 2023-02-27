@@ -24,6 +24,9 @@ import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
 import com.google.android.material.card.MaterialCardView
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 const val APP_PREFERENCES = "APP_PREFERENCES"
 const val PREF_CARD_NUMBER_VALUE = "PREF_CARD_NUMBER_VALUE"
@@ -36,10 +39,6 @@ class MainFragment : Fragment() {
     private lateinit var serviceAdapter: ServiceAdapter
     private lateinit var preferences: SharedPreferences
     private val viewModel: MainViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,9 +78,10 @@ class MainFragment : Fragment() {
 
     private fun setListeners() {
         val cardNumber = preferences.getString(
-            PREF_CARD_NUMBER_VALUE, "0000 0000 0000 0000"
+            PREF_CARD_NUMBER_VALUE, getString(R.string.default_card_number)
         )
         cardNumber?.let { binding.textViewCardNumber.text = changeCardNumberToSecure(cardNumber) }
+        binding.textViewMonthName.text = getMonthName()
 
         binding.apply {
             buttonAddService.setOnClickListener { goToSaveService() }
@@ -90,7 +90,7 @@ class MainFragment : Fragment() {
 
             imageViewEditCard.setOnClickListener {
                 val currentCardNumber = preferences.getString(
-                    PREF_CARD_NUMBER_VALUE, "0000 0000 0000 0000"
+                    PREF_CARD_NUMBER_VALUE, getString(R.string.default_card_number)
                 )
                 editTextCardNumber.visibility = View.VISIBLE
                 editTextCardNumber.setText(currentCardNumber)
@@ -174,6 +174,12 @@ class MainFragment : Fragment() {
 
     private fun changeCardNumberToSecure(cardNumber: String): String {
         return ("${cardNumber.take(4)} **** **** ${cardNumber.takeLast(4)}")
+    }
+
+    private fun getMonthName(): String {
+        val date = Date()
+        val dateFormat = SimpleDateFormat("LLLL", Locale("uk", "UA"))
+        return dateFormat.format(date).replaceFirstChar { it.uppercase() }
     }
 
     private fun goToSaveService() {

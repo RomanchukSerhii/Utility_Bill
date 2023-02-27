@@ -10,6 +10,7 @@ import com.example.utilitybill.R
 import com.example.utilitybill.databinding.ActivityMainBinding
 
 fun Int.isPositive() = this >= 0
+fun Double.isInteger(): Boolean = this.toInt().toDouble() == this
 fun String.trimZero(): String {
     if (this.isBlank()) return "0"
     return if (this.length > 1) this.trim().trimStart('0') else this
