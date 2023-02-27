@@ -49,6 +49,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         name: String,
         tariff: Double,
         previousValue: Int,
+        currentValue: Int,
         isServiceUsed: Boolean,
         isHasMeter: Boolean,
         meterUnit: String
@@ -58,6 +59,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             name = name,
             tariff = tariff,
             previousValue = previousValue,
+            currentValue = currentValue,
             isUsed = isServiceUsed,
             isHasMeter = isHasMeter,
             unit = meterUnit

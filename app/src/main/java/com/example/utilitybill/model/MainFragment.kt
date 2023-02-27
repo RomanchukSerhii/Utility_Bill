@@ -242,9 +242,12 @@ class MainFragment : Fragment() {
         isServiceUsed: Boolean
     ) {
         saveMeterValue(view, serviceId)
+        val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
+        val currentValue = editTextCurrentValue.text.toString().toInt()
 
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed)
+            MainFragmentDirections
+                .actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed, currentValue)
         )
     }
 

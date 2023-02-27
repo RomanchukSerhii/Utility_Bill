@@ -32,6 +32,10 @@
             android:name="is_service_used"
             android:defaultValue="true"
             app:argType="boolean" />
+        <argument
+            android:name="current_value"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"

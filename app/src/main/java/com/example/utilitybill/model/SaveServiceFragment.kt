@@ -29,12 +29,14 @@ class SaveServiceFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var isServiceUsed by notNull<Boolean>()
     private var serviceId by notNull<Int>()
+    private var currentValue by notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             serviceId = it.getInt(SERVICE_ID)
             isServiceUsed = it.getBoolean(IS_SERVICE_USED)
+            currentValue = it.getInt(CURRENT_VALUE)
         }
     }
 
@@ -143,6 +145,7 @@ class SaveServiceFragment : Fragment() {
                         name,
                         tariff.toDouble(),
                         previousValue.toInt(),
+                        currentValue,
                         isServiceUsed,
                         isHasMeter,
                         meterUnit
@@ -209,5 +212,6 @@ class SaveServiceFragment : Fragment() {
     companion object {
         private const val SERVICE_ID = "service_id"
         private const val IS_SERVICE_USED = "is_service_used"
+        private const val CURRENT_VALUE = "current_value"
     }
 }
