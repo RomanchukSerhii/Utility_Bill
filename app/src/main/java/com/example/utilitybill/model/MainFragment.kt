@@ -25,6 +25,7 @@ import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
+import com.example.utilitybill.databinding.ServiceItemBinding
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -189,6 +190,7 @@ class MainFragment : Fragment() {
     }
 
     private fun goToSaveService() {
+        checkAndSaveCurrentValues()
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToSaveServiceFragment()
         )
@@ -203,39 +205,43 @@ class MainFragment : Fragment() {
 
     private fun goToResult() {
         viewModel.updateServices(serviceAdapter.currentList)
-        val recyclerView = binding.recyclerView
-        for (i in 0 until recyclerView.childCount) {
-            val child = recyclerView.getChildAt(i)
-            if (child is MaterialCardView) {
-                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
-                val serviceId = textViewServiceId.text.toString().toInt()
-                if (!saveMeterValue(child, serviceId)) return
-            }
-        }
+        checkAndSaveCurrentValues()
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToResultFragment()
         )
     }
 
-    private fun saveMeterValue(view: View, serviceId: Int): Boolean {
-        val editTextPreviousValue = view.findViewById<EditText>(R.id.editTextPreviousValue)
-        val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
-        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
-        val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
-        return if (currentValue - previousValue < 0) {
-            editTextCurrentValue.error = getString(R.string.current_value_error)
-            editTextCurrentValue.requestFocus()
-            editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
-            false
-        } else {
-            viewModel.updateMeterValue(serviceId, previousValue, currentValue)
-            true
+    private fun checkAndSaveCurrentValues() {
+        val recyclerView = binding.recyclerView
+        for (i in 0 until recyclerView.childCount) {
+            val child = recyclerView.getChildAt(i)
+            if (child is MaterialCardView) {
+                if (!saveMeterValue(child)) return
+            }
+        }
+    }
+
+    private fun saveMeterValue(serviceItemView: View): Boolean {
+        val serviceItemBinding = ServiceItemBinding.bind(serviceItemView)
+        serviceItemBinding.apply {
+            val serviceId = textViewServiceId.text.toString().toInt()
+            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+            return if (currentValue - previousValue < 0) {
+                editTextCurrentValue.error = getString(R.string.current_value_error)
+                editTextCurrentValue.requestFocus()
+                editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
+                false
+            } else {
+                viewModel.updateMeterValue(serviceId, previousValue, currentValue)
+                true
+            }
         }
     }
 
     private fun onListItemClicked(view: View, service: Service) {
         viewModel.updateServices(serviceAdapter.currentList)
-        saveMeterValue(view, service.id)
+        saveMeterValue(view)
         val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
 
         if (checkableLayout != null) {
@@ -250,7 +256,7 @@ class MainFragment : Fragment() {
         serviceId: Int,
         isServiceUsed: Boolean
     ) {
-        saveMeterValue(view, serviceId)
+        saveMeterValue(view)
         val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
         val currentValue = editTextCurrentValue.text.toString().toInt()
 

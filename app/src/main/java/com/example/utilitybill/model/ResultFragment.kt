@@ -71,7 +71,7 @@ class ResultFragment : Fragment() {
         )
         var total = 0
 
-        services.forEach { service ->
+        services.filter { it.isUsed }.forEach { service ->
             if (service.isHasMeter) {
                 val valueDifference = service.currentValue - service.previousValue
                 val servicePrice = (valueDifference * service.tariff).toInt()
