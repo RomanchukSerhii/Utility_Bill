@@ -195,7 +195,6 @@ class MainFragment : Fragment() {
     }
 
     private fun observeViewModels() {
-
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
             Log.d("MainFragment", services.joinToString())
             serviceAdapter.submitList(services)
@@ -203,26 +202,19 @@ class MainFragment : Fragment() {
     }
 
     private fun goToResult() {
-        val currentServiceList = serviceAdapter.currentList
-        for (i in 0 until currentServiceList.size) {
-            currentServiceList[i].order = i
+        viewModel.updateServices(serviceAdapter.currentList)
+        val recyclerView = binding.recyclerView
+        for (i in 0 until recyclerView.childCount) {
+            val child = recyclerView.getChildAt(i)
+            if (child is MaterialCardView) {
+                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
+                val serviceId = textViewServiceId.text.toString().toInt()
+                if (!saveMeterValue(child, serviceId)) return
+            }
         }
-//        currentServiceList.forEach { service ->
-//            viewModel.updateService(service)
-//        }
-        viewModel.updateServices(currentServiceList)
-//        val recyclerView = binding.recyclerView
-//        for (i in 0 until recyclerView.childCount) {
-//            val child = recyclerView.getChildAt(i)
-//            if (child is MaterialCardView) {
-//                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
-//                val serviceId = textViewServiceId.text.toString().toInt()
-//                if (!saveMeterValue(child, serviceId)) return
-//            }
-//        }
-//        findNavController().navigate(
-//            MainFragmentDirections.actionMainFragmentToResultFragment()
-//        )
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToResultFragment()
+        )
     }
 
     private fun saveMeterValue(view: View, serviceId: Int): Boolean {
@@ -242,6 +234,7 @@ class MainFragment : Fragment() {
     }
 
     private fun onListItemClicked(view: View, service: Service) {
+        viewModel.updateServices(serviceAdapter.currentList)
         saveMeterValue(view, service.id)
         val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
 

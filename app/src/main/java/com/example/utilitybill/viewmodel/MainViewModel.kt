@@ -73,13 +73,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateService(service: Service) {
-        viewModelScope.launch {
-            serviceDao.updateService(service)
-        }
-    }
-
     fun updateServices(services: List<Service>) {
+        for (i in services.indices) {
+            services[i].order = i
+        }
         viewModelScope.launch {
             serviceDao.updateServices(services)
         }
