@@ -32,20 +32,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         isHasMeter: Boolean,
         meterUnit: String
     ) {
-        val service = Service(
-            name = name,
-            tariff = tariff,
-            previousValue = previousValue,
-            isHasMeter = isHasMeter,
-            unit = meterUnit
-        )
         viewModelScope.launch {
+            val maxOrder = serviceDao.getMaxOrder() ?: -1
+            val service = Service(
+                order = maxOrder + 1,
+                name = name,
+                tariff = tariff,
+                previousValue = previousValue,
+                isHasMeter = isHasMeter,
+                unit = meterUnit
+            )
             serviceDao.addService(service)
         }
     }
 
     fun updateService(
         serviceId: Int,
+        order: Int,
         name: String,
         tariff: Double,
         previousValue: Int,
@@ -56,6 +59,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     ) {
         val service = Service (
             id = serviceId,
+            order = order,
             name = name,
             tariff = tariff,
             previousValue = previousValue,
@@ -66,6 +70,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         )
         viewModelScope.launch {
             serviceDao.updateService(service)
+        }
+    }
+
+    fun updateService(service: Service) {
+        viewModelScope.launch {
+            serviceDao.updateService(service)
+        }
+    }
+
+    fun updateServices(services: List<Service>) {
+        viewModelScope.launch {
+            serviceDao.updateServices(services)
         }
     }
 

@@ -10,6 +10,9 @@ data class Service(
     @ColumnInfo(name = "id")
     val id: Int = 0,
 
+    @ColumnInfo(name = "order")
+    var order: Int,
+
     @ColumnInfo(name = "name")
     val name: String,
 

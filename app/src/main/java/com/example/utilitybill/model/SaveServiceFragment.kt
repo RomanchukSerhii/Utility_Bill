@@ -29,6 +29,7 @@ class SaveServiceFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private var isServiceUsed by notNull<Boolean>()
     private var serviceId by notNull<Int>()
+    private var serviceOrder by notNull<Int>()
     private var currentValue by notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +67,7 @@ class SaveServiceFragment : Fragment() {
             R.string.edit_service_title
         )
         viewModel.getService(serviceId).observe(viewLifecycleOwner) { service ->
+            serviceOrder = service.order
             binding.apply {
                 editTextNameService.setText(service.name)
                 editTextServiceTariff.setText(service.tariff.toString())
@@ -142,6 +144,7 @@ class SaveServiceFragment : Fragment() {
                 if (serviceId.isPositive()) {
                     viewModel.updateService(
                         serviceId,
+                        serviceOrder,
                         name,
                         tariff.toDouble(),
                         previousValue.toInt(),

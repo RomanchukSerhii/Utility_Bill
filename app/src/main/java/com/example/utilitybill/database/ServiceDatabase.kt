@@ -30,17 +30,23 @@ abstract class ServiceDatabase : RoomDatabase() {
 
 @Dao
 interface ServiceDao {
-    @Query("SELECT * FROM service")
+    @Query("SELECT * FROM service ORDER BY `order`")
     fun getServices(): LiveData<List<Service>>
 
     @Query("SELECT * FROM service WHERE id = :id")
     fun getService(id: Int): LiveData<Service>
+
+    @Query("SELECT MAX('order') FROM service")
+    suspend fun getMaxOrder(): Int?
 
     @Insert
     suspend fun addService(service: Service)
 
     @Update
     suspend fun updateService(service: Service)
+
+    @Update
+    suspend fun updateServices(services: List<Service>)
 
     @Query("DELETE FROM service WHERE id = :id")
     suspend fun removeService(id: Int)

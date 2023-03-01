@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
+import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -194,24 +195,34 @@ class MainFragment : Fragment() {
     }
 
     private fun observeViewModels() {
+
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
+            Log.d("MainFragment", services.joinToString())
             serviceAdapter.submitList(services)
         }
     }
 
     private fun goToResult() {
-        val recyclerView = binding.recyclerView
-        for (i in 0 until recyclerView.childCount) {
-            val child = recyclerView.getChildAt(i)
-            if (child is MaterialCardView) {
-                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
-                val serviceId = textViewServiceId.text.toString().toInt()
-                if (!saveMeterValue(child, serviceId)) return
-            }
+        val currentServiceList = serviceAdapter.currentList
+        for (i in 0 until currentServiceList.size) {
+            currentServiceList[i].order = i
         }
-        findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToResultFragment()
-        )
+//        currentServiceList.forEach { service ->
+//            viewModel.updateService(service)
+//        }
+        viewModel.updateServices(currentServiceList)
+//        val recyclerView = binding.recyclerView
+//        for (i in 0 until recyclerView.childCount) {
+//            val child = recyclerView.getChildAt(i)
+//            if (child is MaterialCardView) {
+//                val textViewServiceId = child.findViewById<TextView>(R.id.textViewServiceId)
+//                val serviceId = textViewServiceId.text.toString().toInt()
+//                if (!saveMeterValue(child, serviceId)) return
+//            }
+//        }
+//        findNavController().navigate(
+//            MainFragmentDirections.actionMainFragmentToResultFragment()
+//        )
     }
 
     private fun saveMeterValue(view: View, serviceId: Int): Boolean {
