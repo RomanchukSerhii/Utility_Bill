@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentResultBinding
@@ -28,6 +29,7 @@ class ResultFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var preferences: SharedPreferences
+    private lateinit var servicesList: List<Service>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +43,11 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
+            servicesList = services.filter { it.isUsed }
             val bill = createBill(services)
             binding.textViewBill.text = bill
         }
-
+        binding.buttonSaveBill.setOnClickListener { saveBill(servicesList) }
         binding.imageViewCopy.setOnClickListener { copyToClipboard() }
     }
 
@@ -109,6 +112,17 @@ class ResultFragment : Fragment() {
         }
         stringBuilder.append(getString(R.string.service_total, total, cardNumber))
         return stringBuilder.toString()
+    }
+
+    private fun saveBill(services: List<Service>) {
+        services.forEach { service ->
+            service.previousValue = service.currentValue
+            service.currentValue = 0
+        }
+        viewModel.updateServices(services)
+        findNavController().navigate(
+            ResultFragmentDirections.actionResultFragmentToMainFragment()
+        )
     }
 
 }

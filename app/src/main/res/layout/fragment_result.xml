@@ -51,6 +51,24 @@
             app:layout_constraintTop_toBottomOf="@id/imageViewCopy"
             app:layout_constraintStart_toStartOf="parent"/>
 
+        <Button
+            android:id="@+id/buttonSaveBill"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/lato_bold"
+            android:letterSpacing="0.01"
+            android:text="Зберегти рахунок"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewBill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
