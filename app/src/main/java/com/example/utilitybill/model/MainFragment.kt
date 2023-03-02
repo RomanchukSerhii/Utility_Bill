@@ -5,16 +5,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.method.DigitsKeyListener
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -28,7 +24,6 @@ import com.example.utilitybill.databinding.FragmentMainBinding
 import com.example.utilitybill.databinding.ServiceItemBinding
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 const val APP_PREFERENCES = "APP_PREFERENCES"
@@ -189,13 +184,6 @@ class MainFragment : Fragment() {
         return dateFormat.format(date).replaceFirstChar { it.uppercase() }
     }
 
-    private fun goToSaveService() {
-        checkAndSaveCurrentValues()
-        findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToSaveServiceFragment()
-        )
-    }
-
     private fun observeViewModels() {
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
             Log.d("MainFragment", services.joinToString())
@@ -203,22 +191,31 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun goToResult() {
-        viewModel.updateServices(serviceAdapter.currentList)
-        checkAndSaveCurrentValues()
+    private fun goToSaveService() {
+        saveCurrentMeterValues()
         findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToResultFragment()
+            MainFragmentDirections.actionMainFragmentToSaveServiceFragment()
         )
     }
 
-    private fun checkAndSaveCurrentValues() {
+    private fun goToResult() {
+        viewModel.updateServices(serviceAdapter.currentList)
+        if (saveMeterValue()) {
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToResultFragment()
+            )
+        }
+    }
+
+    private fun saveMeterValue(): Boolean {
         val recyclerView = binding.recyclerView
         for (i in 0 until recyclerView.childCount) {
             val child = recyclerView.getChildAt(i)
             if (child is MaterialCardView) {
-                if (!saveMeterValue(child)) return
+                if (!saveMeterValue(child)) return false
             }
         }
+        return true
     }
 
     private fun saveMeterValue(serviceItemView: View): Boolean {
@@ -235,6 +232,21 @@ class MainFragment : Fragment() {
             } else {
                 viewModel.updateMeterValue(serviceId, previousValue, currentValue)
                 true
+            }
+        }
+    }
+
+    private fun saveCurrentMeterValues() {
+        val recyclerView = binding.recyclerView
+        for (i in 0 until recyclerView.childCount) {
+            val child = recyclerView.getChildAt(i)
+            if (child is MaterialCardView) {
+                val serviceItemBinding = ServiceItemBinding.bind(child)
+                serviceItemBinding.apply {
+                    val serviceId = textViewServiceId.text.toString().toInt()
+                    val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+                    viewModel.updateCurrentValue(serviceId, currentValue)
+                }
             }
         }
     }
@@ -256,7 +268,7 @@ class MainFragment : Fragment() {
         serviceId: Int,
         isServiceUsed: Boolean
     ) {
-        saveMeterValue(view)
+        saveCurrentMeterValues()
         val editTextCurrentValue = view.findViewById<EditText>(R.id.editTextCurrentValue)
         val currentValue = editTextCurrentValue.text.toString().toInt()
 

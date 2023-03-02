@@ -51,7 +51,11 @@ class SaveServiceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (serviceId.isPositive()) bindFields()
+        if (serviceId.isPositive()) {
+            bindFields()
+        } else {
+            viewModel.switchMeterCheck(true)
+        }
         bindListeners()
         setAdapterToMeterUnit()
         checkMeterAvailability()

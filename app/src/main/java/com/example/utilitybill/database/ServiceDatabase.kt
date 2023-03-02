@@ -59,4 +59,7 @@ interface ServiceDao {
 
     @Query("UPDATE service SET previous_value = :previousValue, current_value = :currentValue WHERE id = :id")
     suspend fun changeValues(id: Int, previousValue: Int, currentValue: Int)
+
+    @Query("UPDATE service SET current_value = :currentValue WHERE id = :id")
+    suspend fun changeCurrentValue(id: Int, currentValue: Int)
 }
