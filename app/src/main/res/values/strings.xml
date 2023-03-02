@@ -46,4 +46,5 @@
     <string name="result_title">Рахунок</string>
     <string name="default_card_number">0000 0000 0000 0000</string>
     <string name="presence_of_meter">Наявність лічильника</string>
+    <string name="delete_bill">Видалити рахунок?</string>
 </resources>

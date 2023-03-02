@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-@Database(entities = [Service::class], version = 2, exportSchema = false)
+@Database(entities = [Service::class, Bill::class], version = 2, exportSchema = false)
 abstract class ServiceDatabase : RoomDatabase() {
     abstract fun serviceDao(): ServiceDao
 
@@ -62,4 +62,19 @@ interface ServiceDao {
 
     @Query("UPDATE service SET current_value = :currentValue WHERE id = :id")
     suspend fun changeCurrentValue(id: Int, currentValue: Int)
+
+    @Query("SELECT * FROM bills")
+    fun getBills(): LiveData<List<Bill>>
+
+    @Query("SELECT * FROM bills WHERE id = :id")
+    fun getBill(id: Int): LiveData<Bill>
+
+    @Insert
+    suspend fun addBill(bill: Bill)
+
+    @Update
+    suspend fun updateBill(bill: Bill)
+
+    @Query("DELETE FROM bills WHERE id = :id")
+    suspend fun removeBill(id: Int)
 }
