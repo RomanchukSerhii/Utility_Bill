@@ -123,6 +123,13 @@ class ResultFragment : Fragment() {
             service.currentValue = 0
         }
         viewModel.updateServices(services)
+        addBill(services)
+        findNavController().navigate(
+            ResultFragmentDirections.actionResultFragmentToMainFragment()
+        )
+    }
+
+    private fun addBill(services: List<Service>) {
         val currentMonth = preferences.getString(
             PREF_MONTH_VALUE, getString(R.string.default_month)
         ) ?: ""
@@ -130,10 +137,18 @@ class ResultFragment : Fragment() {
             services = services,
             month = currentMonth
         )
-        billViewModel.addBill(bill)
-        findNavController().navigate(
-            ResultFragmentDirections.actionResultFragmentToMainFragment()
-        )
+        billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
+            var isNewBill = true
+            bills.forEach { bill ->
+                if (bill.month == currentMonth) {
+                    billViewModel.updateBill(bill)
+                    isNewBill = false
+                }
+            }
+            if (isNewBill) {
+                billViewModel.addBill(bill)
+            }
+        }
     }
 
 }
