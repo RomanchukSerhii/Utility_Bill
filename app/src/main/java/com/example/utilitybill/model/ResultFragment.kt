@@ -16,8 +16,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
+import com.example.utilitybill.database.Bill
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentResultBinding
+import com.example.utilitybill.viewmodel.BillViewModel
 import com.example.utilitybill.viewmodel.MainViewModel
 import kotlin.math.*
 
@@ -28,6 +30,7 @@ class ResultFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentResultBinding == false")
 
     private val viewModel: MainViewModel by activityViewModels()
+    private val billViewModel: BillViewModel by activityViewModels()
     private lateinit var preferences: SharedPreferences
     private lateinit var servicesList: List<Service>
 
@@ -120,6 +123,14 @@ class ResultFragment : Fragment() {
             service.currentValue = 0
         }
         viewModel.updateServices(services)
+        val currentMonth = preferences.getString(
+            PREF_MONTH_VALUE, getString(R.string.default_month)
+        ) ?: ""
+        val bill = Bill(
+            services = services,
+            month = currentMonth
+        )
+        billViewModel.addBill(bill)
         findNavController().navigate(
             ResultFragmentDirections.actionResultFragmentToMainFragment()
         )

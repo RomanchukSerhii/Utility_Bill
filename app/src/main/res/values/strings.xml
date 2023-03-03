@@ -43,8 +43,11 @@
     <string name="clipboard_text">Рахунок скопійовано до буфера обміну</string>
     <string name="add_service_title">Додати нову послугу</string>
     <string name="edit_service_title">Змінити деталі послуги</string>
+    <string name="bill_month_title">Рахунок за %s</string>
     <string name="result_title">Рахунок</string>
     <string name="default_card_number">0000 0000 0000 0000</string>
+    <string name="default_month">Місяць відсутній</string>
     <string name="presence_of_meter">Наявність лічильника</string>
     <string name="delete_bill">Видалити рахунок?</string>
+    <string name="archive_bills">Архів рахунків</string>
 </resources>

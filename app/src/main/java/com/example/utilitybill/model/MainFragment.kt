@@ -28,6 +28,7 @@ import java.util.*
 
 const val APP_PREFERENCES = "APP_PREFERENCES"
 const val PREF_CARD_NUMBER_VALUE = "PREF_CARD_NUMBER_VALUE"
+const val PREF_MONTH_VALUE = "PREF_MONTH_VALUE"
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
@@ -89,6 +90,8 @@ class MainFragment : Fragment() {
             buttonAddService.setOnClickListener { goToSaveService() }
 
             buttonCreateBill.setOnClickListener { goToResult() }
+
+            buttonArchiveBills.setOnClickListener { goToBillList() }
 
             imageViewEditCard.setOnClickListener {
                 val currentCardNumber = preferences.getString(
@@ -181,7 +184,11 @@ class MainFragment : Fragment() {
     private fun getMonthName(): String {
         val date = Date()
         val dateFormat = SimpleDateFormat("LLLL", Locale("uk", "UA"))
-        return dateFormat.format(date).replaceFirstChar { it.uppercase() }
+        val currentMonth = dateFormat.format(date).replaceFirstChar { it.uppercase() }
+        preferences.edit()
+            .putString(PREF_MONTH_VALUE, currentMonth)
+            .apply()
+        return currentMonth
     }
 
     private fun observeViewModels() {
@@ -205,6 +212,12 @@ class MainFragment : Fragment() {
                 MainFragmentDirections.actionMainFragmentToResultFragment()
             )
         }
+    }
+
+    private fun goToBillList() {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToBillListFragment()
+        )
     }
 
     private fun saveMeterValue(): Boolean {
