@@ -9,7 +9,7 @@ import com.example.utilitybill.database.Bill
 import com.example.utilitybill.databinding.BillItemBinding
 
 class BillAdapter(
-    private val onListItemClicked: (bill: Bill) -> Unit,
+    private val onListItemClicked: (billId: Int) -> Unit,
     private val onDeleteIconClicked: (billId: Int) -> Unit
 ): ListAdapter<Bill, BillAdapter.BillItemViewHolder>(DiffCallback){
 
@@ -25,7 +25,7 @@ class BillAdapter(
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
         val currentBill = getItem(position)
         holder.bind(currentBill, onDeleteIconClicked)
-        onListItemClicked(currentBill)
+        onListItemClicked(currentBill.id)
     }
 
     class BillItemViewHolder(

@@ -3,22 +3,22 @@ package com.example.utilitybill.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.utilitybill.database.Service
-import com.example.utilitybill.database.ServiceDatabase
+import com.example.utilitybill.database.AppDatabase
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val serviceDao = ServiceDatabase.getDatabase(application).serviceDao()
+    private val appDao = AppDatabase.getDatabase(application).appDao()
 
     private val _isMeterChecked = MutableLiveData<Boolean>()
     val isMeterChecked: LiveData<Boolean> = _isMeterChecked
 
 
     fun getServices(): LiveData<List<Service>> {
-        return serviceDao.getServices()
+        return appDao.getServices()
     }
 
     fun getService(serviceId: Int): LiveData<Service> {
-        return serviceDao.getService(serviceId)
+        return appDao.getService(serviceId)
     }
 
     fun switchMeterCheck(isChecked: Boolean) {
@@ -33,7 +33,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         meterUnit: String
     ) {
         viewModelScope.launch {
-            val maxOrder = serviceDao.getMaxOrder() ?: -1
+            val maxOrder = appDao.getMaxOrder() ?: -1
             val service = Service(
                 order = maxOrder + 1,
                 name = name,
@@ -42,7 +42,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 isHasMeter = isHasMeter,
                 unit = meterUnit
             )
-            serviceDao.addService(service)
+            appDao.addService(service)
         }
     }
 
@@ -69,7 +69,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             unit = meterUnit
         )
         viewModelScope.launch {
-            serviceDao.updateService(service)
+            appDao.updateService(service)
         }
     }
 
@@ -78,31 +78,31 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             services[i].order = i
         }
         viewModelScope.launch {
-            serviceDao.updateServices(services)
+            appDao.updateServices(services)
         }
     }
 
     fun updateUsedStatus(id: Int, isUsed: Boolean) {
         viewModelScope.launch {
-            serviceDao.changeUsedStatus(id, isUsed)
+            appDao.changeUsedStatus(id, isUsed)
         }
     }
 
     fun updateMeterValue(id: Int, previousValue: Int, currentValue: Int) {
         viewModelScope.launch {
-            serviceDao.changeValues(id, previousValue, currentValue)
+            appDao.changeValues(id, previousValue, currentValue)
         }
     }
 
     fun updateCurrentValue(id: Int, currentValue: Int) {
         viewModelScope.launch {
-            serviceDao.changeCurrentValue(id, currentValue)
+            appDao.changeCurrentValue(id, currentValue)
         }
     }
 
     fun removeService(id: Int) {
         viewModelScope.launch {
-            serviceDao.removeService(id)
+            appDao.removeService(id)
         }
     }
 }

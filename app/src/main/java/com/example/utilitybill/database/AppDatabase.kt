@@ -5,20 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Database(entities = [Service::class, Bill::class], version = 2, exportSchema = false)
-abstract class ServiceDatabase : RoomDatabase() {
-    abstract fun serviceDao(): ServiceDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun appDao(): ServiceDao
 
     companion object {
         private const val DB_NAME = "service.db"
 
         @Volatile
-        private var INSTANCE: ServiceDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(application: Application): ServiceDatabase {
+        fun getDatabase(application: Application): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     application,
-                    ServiceDatabase::class.java,
+                    AppDatabase::class.java,
                     DB_NAME
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
