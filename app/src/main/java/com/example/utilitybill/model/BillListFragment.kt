@@ -13,6 +13,7 @@ import com.example.utilitybill.R
 import com.example.utilitybill.database.Bill
 import com.example.utilitybill.databinding.FragmentBillListBinding
 import com.example.utilitybill.viewmodel.BillViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class BillListFragment : Fragment() {
 
@@ -35,7 +36,7 @@ class BillListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         billAdapter = BillAdapter(
             { billId -> onListItemClicked(billId) },
-            { deleteImageView, billId -> onDeleteItemClicked(deleteImageView, billId) }
+            { billId -> onDeleteItemClicked(billId) }
         )
         billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
             Log.d("BillListFragment", bills.joinToString())
@@ -55,9 +56,15 @@ class BillListFragment : Fragment() {
         )
     }
 
-    private fun onDeleteItemClicked(deleteIconView: ImageView, billId: Int) {
-        deleteIconView.setOnClickListener {
-            billViewModel.removeBill(billId)
-        }
+    private fun onDeleteItemClicked(billId: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.alert_title_delete_service))
+            .setMessage(getString(R.string.alert_message_delete_bill))
+            .setCancelable(true)
+            .setNegativeButton(getString(R.string.alert_message_cancel)) { _, _ -> }
+            .setPositiveButton(getString(R.string.alert_message_accept)) { _, _ ->
+                billViewModel.removeBill(billId)
+            }
+            .show()
     }
 }

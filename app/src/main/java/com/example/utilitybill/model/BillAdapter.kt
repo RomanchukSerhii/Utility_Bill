@@ -11,7 +11,7 @@ import com.example.utilitybill.databinding.BillItemBinding
 
 class BillAdapter(
     private val onListItemClicked: (billId: Int) -> Unit,
-    private val onDeleteIconClicked: (deleteIconView: ImageView, billId: Int) -> Unit
+    private val onDeleteIconClicked: (billId: Int) -> Unit
 ): ListAdapter<Bill, BillAdapter.BillItemViewHolder>(DiffCallback){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
@@ -34,13 +34,12 @@ class BillAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             bill: Bill,
-            onDeleteIconClicked: (deleteIconView: ImageView, billId: Int) -> Unit
+            onDeleteIconClicked: (billId: Int) -> Unit
         ) {
             binding.apply {
                 textViewBillMonth.text = bill.month
-                val deleteIconView = imageViewDeleteBill
                 imageViewDeleteBill.setOnClickListener {
-                    onDeleteIconClicked(deleteIconView, bill.id)
+                    onDeleteIconClicked(bill.id)
                 }
             }
         }
