@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
-@Database(entities = [Service::class, Bill::class], version = 3, exportSchema = false)
+@Database(entities = [Service::class, Bill::class], version = 4, exportSchema = false)
 @TypeConverters(ServiceListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun appDao(): ServiceDao

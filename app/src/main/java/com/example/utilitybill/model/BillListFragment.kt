@@ -52,7 +52,7 @@ class BillListFragment : Fragment() {
 
     private fun onListItemClicked(billId: Int) {
         findNavController().navigate(
-            BillListFragmentDirections.actionBillListFragmentToBillFragment(billId)
+            BillListFragmentDirections.actionBillListFragmentToResultFragment(billId)
         )
     }
 

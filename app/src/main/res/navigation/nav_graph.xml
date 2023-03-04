@@ -48,6 +48,13 @@
         <action
             android:id="@+id/action_resultFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_billDetailFragment"
+            app:destination="@id/billFragment" />
+        <argument
+            android:name="bill_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/billListFragment"
@@ -55,14 +62,14 @@
         android:label="@string/archive_bills"
         tools:layout="@layout/fragment_bill_list">
         <action
-            android:id="@+id/action_billListFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            android:id="@+id/action_billListFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/billFragment"
-        android:name="com.example.utilitybill.model.BillFragment"
+        android:name="com.example.utilitybill.model.BillDetailFragment"
         android:label="@string/bill_month_title"
-        tools:layout="@layout/fragment_bill">
+        tools:layout="@layout/fragment_bill_detail">
         <argument
             android:name="bill_id"
             app:argType="integer" />

@@ -22,6 +22,8 @@ import com.example.utilitybill.databinding.FragmentResultBinding
 import com.example.utilitybill.viewmodel.BillViewModel
 import com.example.utilitybill.viewmodel.MainViewModel
 import kotlin.math.*
+import kotlin.properties.Delegates
+import kotlin.properties.Delegates.notNull
 
 
 class ResultFragment : Fragment() {
@@ -33,6 +35,8 @@ class ResultFragment : Fragment() {
     private val billViewModel: BillViewModel by activityViewModels()
     private lateinit var preferences: SharedPreferences
     private lateinit var servicesList: List<Service>
+    private lateinit var billResult: String
+    private var billId: Int by notNull()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,18 +49,41 @@ class ResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getServices().observe(viewLifecycleOwner) { services ->
-            servicesList = services.filter { it.isUsed }
-            val bill = createBill(services)
-            binding.textViewBill.text = bill
-        }
-        binding.buttonSaveBill.setOnClickListener { saveBill(servicesList) }
-        binding.imageViewCopy.setOnClickListener { copyToClipboard() }
+        arguments?.let { billId = it.getInt(BILL_ID_KEY) }
+        observeViewModel()
+        setListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun observeViewModel() {
+        viewModel.getServices().observe(viewLifecycleOwner) { services ->
+            if (billId < 0) {
+                servicesList = services.filter { it.isUsed }
+                billResult = createBill(services)
+                binding.textViewBill.text = billResult
+                addBill(services)
+            } else {
+                billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
+                    binding.apply {
+                        textViewBill.text = bill.billResult
+                        buttonSaveBill.visibility = View.GONE
+                        buttonBillDetail.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setListeners() {
+        binding.apply {
+            buttonSaveBill.setOnClickListener { saveBill(servicesList) }
+            imageViewCopy.setOnClickListener { copyToClipboard() }
+            buttonBillDetail.setOnClickListener { goToBillDetailFragment() }
+        }
     }
 
     private fun copyToClipboard() {
@@ -123,7 +150,6 @@ class ResultFragment : Fragment() {
             service.currentValue = 0
         }
         viewModel.updateServices(services)
-        addBill(services)
         findNavController().navigate(
             ResultFragmentDirections.actionResultFragmentToMainFragment()
         )
@@ -135,7 +161,8 @@ class ResultFragment : Fragment() {
         ) ?: ""
         val bill = Bill(
             services = services,
-            month = currentMonth
+            month = currentMonth,
+            billResult = billResult
         )
         billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
             var isNewBill = true
@@ -149,6 +176,16 @@ class ResultFragment : Fragment() {
                 billViewModel.addBill(bill)
             }
         }
+    }
+
+    private fun goToBillDetailFragment() {
+        findNavController().navigate(
+            ResultFragmentDirections.actionResultFragmentToBillDetailFragment(billId)
+        )
+    }
+
+    companion object {
+        private const val BILL_ID_KEY = "bill_id"
     }
 
 }

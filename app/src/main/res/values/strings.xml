@@ -52,4 +52,6 @@
     <string name="presence_of_meter">Наявність лічильника</string>
     <string name="delete_bill">Видалити рахунок?</string>
     <string name="archive_bills">Архів рахунків</string>
+    <string name="save_bill">Зберегти рахунок</string>
+    <string name="bill_detail">Деталі рахунку</string>
 </resources>

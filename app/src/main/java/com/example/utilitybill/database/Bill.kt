@@ -14,5 +14,8 @@ data class Bill(
     val services: List<Service>,
 
     @ColumnInfo(name = "month")
-    val month: String
+    val month: String,
+
+    @ColumnInfo(name = "bill_result")
+    val billResult: String
 )

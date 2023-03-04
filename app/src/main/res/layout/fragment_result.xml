@@ -52,7 +52,25 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
-            android:id="@+id/buttonSaveBill"
+        android:id="@+id/buttonSaveBill"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lato_bold"
+        android:letterSpacing="0.01"
+        android:text="@string/save_bill"
+        android:textAllCaps="false"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textViewBill"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/buttonBillDetail"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -61,10 +79,11 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/lato_bold"
             android:letterSpacing="0.01"
-            android:text="Зберегти рахунок"
+            android:text="@string/bill_detail"
             android:textAllCaps="false"
             android:textColor="@color/red"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/textViewBill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
