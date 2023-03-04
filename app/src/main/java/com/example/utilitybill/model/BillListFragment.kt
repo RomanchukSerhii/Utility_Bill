@@ -14,6 +14,7 @@ import com.example.utilitybill.database.Bill
 import com.example.utilitybill.databinding.FragmentBillListBinding
 import com.example.utilitybill.viewmodel.BillViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.properties.Delegates.notNull
 
 class BillListFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class BillListFragment : Fragment() {
 
     private lateinit var billAdapter: BillAdapter
     private val billViewModel: BillViewModel by activityViewModels()
+    private var billId: Int by notNull()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +36,21 @@ class BillListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        billAdapter = BillAdapter(
-            { billId -> onListItemClicked(billId) },
-            { billId -> onDeleteItemClicked(billId) }
-        )
-        billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
-            Log.d("BillListFragment", bills.joinToString())
-            billAdapter.submitList(bills)
+        arguments?.let {
+            billId = it.getInt(BILL_ID_KEY)
+        }
+        billAdapter = if (billId < 0) {
+            val billListAdapter = BillAdapter(
+                { billId -> onListItemClicked(billId) },
+                { billId -> onDeleteItemClicked(billId) }
+            )
+            billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
+                Log.d("BillListFragment", bills.joinToString())
+                billListAdapter.submitList(bills)
+            }
+            billListAdapter
+        } else {
+            return TODO()
         }
         binding.recyclerViewBill.adapter = billAdapter
     }
@@ -66,5 +76,9 @@ class BillListFragment : Fragment() {
                 billViewModel.removeBill(billId)
             }
             .show()
+    }
+
+    companion object {
+        private const val BILL_ID_KEY = "bill_id"
     }
 }

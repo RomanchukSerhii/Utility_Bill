@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewServiceNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/service_name_title"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewServiceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewServiceNameTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewServiceNameTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewServiceNameTitle"
+        tools:text="Електроенергія" />
+
+    <TextView
+        android:id="@+id/textViewTariffTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/tariff_title"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewServiceNameTitle" />
+
+    <TextView
+        android:id="@+id/textViewTariffValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/tariff_value"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewTariffTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewTariffTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewTariffTitle"
+        tools:text="1.44 грн" />
+
+    <TextView
+        android:id="@+id/textViewCurrentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/current_value_title"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTariffTitle" />
+
+    <TextView
+        android:id="@+id/textViewCurrentValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewCurrentTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewCurrentTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewCurrentTitle"
+        tools:text="1710 кВт." />
+
+    <TextView
+        android:id="@+id/textViewPreviousValueTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/previous_value_title"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCurrentTitle" />
+
+    <TextView
+        android:id="@+id/textViewPreviousValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewPreviousValueTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewPreviousValueTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewPreviousValueTitle"
+        tools:text="1560 кВт." />
+
+    <TextView
+        android:id="@+id/textViewConsumedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/consumed_title"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewPreviousValueTitle" />
+
+    <TextView
+        android:id="@+id/textViewConsumedValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewConsumedTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewConsumedTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewConsumedTitle"
+        tools:text="150 кВт." />
+
+    <TextView
+        android:id="@+id/textViewSumTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/sum_titlte"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewConsumedTitle" />
+
+    <TextView
+        android:id="@+id/textViewSumValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/sum_value"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/textViewSumTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewSumTitle"
+        app:layout_constraintStart_toEndOf="@id/textViewSumTitle"
+        tools:text="208 грн" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSumTitle" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

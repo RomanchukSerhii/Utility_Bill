@@ -54,4 +54,12 @@
     <string name="archive_bills">Архів рахунків</string>
     <string name="save_bill">Зберегти рахунок</string>
     <string name="bill_detail">Деталі рахунку</string>
+    <string name="previous_value_title">Попередні показники:</string>
+    <string name="current_value_title">Поточні показники:</string>
+    <string name="tariff_title">Тариф:</string>
+    <string name="service_name_title">Назва послуги:</string>
+    <string name="consumed_title">Спожито:</string>
+    <string name="tariff_value">%.2f грн</string>
+    <string name="sum_titlte">Сума:</string>
+    <string name="sum_value">%.2f грн</string>
 </resources>

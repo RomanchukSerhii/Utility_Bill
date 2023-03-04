@@ -64,6 +64,10 @@
         <action
             android:id="@+id/action_billListFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument
+            android:name="bill_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/billFragment"
