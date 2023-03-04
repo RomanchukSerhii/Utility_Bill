@@ -1,11 +1,14 @@
 package com.example.utilitybill.model
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.ServiceWithMeterBinding
 import com.example.utilitybill.databinding.ServiceWithoutMeterBinding
@@ -30,7 +33,12 @@ class BillDetailAdapter() : ListAdapter<Service, RecyclerView.ViewHolder>(DiffCa
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentService = getItem(position)
+        if (getItemViewType(position) == SERVICE_WITH_METER) {
+            (holder as ServiceWithMeterItemViewHolder).bind(currentService, holder.itemView.context)
+        } else {
+            (holder as ServiceWithoutMeterItemViewHolder).bind(currentService, holder.itemView.context)
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -41,13 +49,39 @@ class BillDetailAdapter() : ListAdapter<Service, RecyclerView.ViewHolder>(DiffCa
     class ServiceWithMeterItemViewHolder(
         private val binding: ServiceWithMeterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
+        fun bind(service: Service, context: Context) {
+            binding.apply {
+                val consumed = service.currentValue - service.previousValue
+                val sum = consumed * service.tariff
+                textViewServiceName.text = service.name
+                textViewTariffValue.text = context.getString(R.string.tariff_value)
+                textViewCurrentValue.text = context.getString(
+                    R.string.current_value_detail, service.currentValue, service.unit
+                )
+                textViewPreviousValue.text = context.getString(
+                    R.string.previous_value_detail, service.previousValue, service.unit
+                )
+                textViewConsumedValue.text = context.getString(
+                    R.string.consumed_value, consumed, service.unit
+                )
+                textViewSumValue.text = context.getString(
+                    R.string.sum_value, sum
+                )
+            }
+        }
     }
 
     class ServiceWithoutMeterItemViewHolder(
         private val binding: ServiceWithoutMeterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
+        fun bind(service: Service, context: Context) {
+            binding.apply {
+                textViewServiceName.text = service.name
+                textViewSumValue.text = context.getString(
+                    R.string.sum_value, service.tariff
+                )
+            }
+        }
     }
 
     companion object {

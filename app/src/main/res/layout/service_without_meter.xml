@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16sp"
         android:fontFamily="@font/lato_regular"
-        android:text="@string/sum_titlte"
+        android:text="@string/sum_title"
         android:textColor="@color/dark_gray"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"

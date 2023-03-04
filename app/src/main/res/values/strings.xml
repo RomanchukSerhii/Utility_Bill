@@ -60,6 +60,9 @@
     <string name="service_name_title">Назва послуги:</string>
     <string name="consumed_title">Спожито:</string>
     <string name="tariff_value">%.2f грн</string>
-    <string name="sum_titlte">Сума:</string>
+    <string name="sum_title">Сума:</string>
     <string name="sum_value">%.2f грн</string>
+    <string name="current_value_detail">%d %s</string>
+    <string name="previous_value_detail">%d %s</string>
+    <string name="consumed_value">%d %s</string>
 </resources>

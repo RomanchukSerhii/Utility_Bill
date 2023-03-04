@@ -180,7 +180,7 @@ class ResultFragment : Fragment() {
 
     private fun goToBillDetailFragment() {
         findNavController().navigate(
-            ResultFragmentDirections.actionResultFragmentToBillDetailFragment(billId)
+            ResultFragmentDirections.actionResultFragmentToBillListFragment(billId)
         )
     }
 

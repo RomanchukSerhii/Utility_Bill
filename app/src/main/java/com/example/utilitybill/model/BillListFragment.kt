@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ListAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
@@ -23,6 +24,7 @@ class BillListFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentBillListBinding == null")
 
     private lateinit var billAdapter: BillAdapter
+    private lateinit var billDetailAdapter: BillDetailAdapter
     private val billViewModel: BillViewModel by activityViewModels()
     private var billId: Int by notNull()
 
@@ -39,20 +41,22 @@ class BillListFragment : Fragment() {
         arguments?.let {
             billId = it.getInt(BILL_ID_KEY)
         }
-        billAdapter = if (billId < 0) {
-            val billListAdapter = BillAdapter(
+        if (billId < 0) {
+            billAdapter = BillAdapter(
                 { billId -> onListItemClicked(billId) },
                 { billId -> onDeleteItemClicked(billId) }
             )
             billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
-                Log.d("BillListFragment", bills.joinToString())
-                billListAdapter.submitList(bills)
+                billAdapter.submitList(bills)
             }
-            billListAdapter
+            binding.recyclerViewBill.adapter = billAdapter
         } else {
-            return TODO()
+            billDetailAdapter = BillDetailAdapter()
+            billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
+                billDetailAdapter.submitList(bill.services)
+            }
+            binding.recyclerViewBill.adapter = billDetailAdapter
         }
-        binding.recyclerViewBill.adapter = billAdapter
     }
 
     override fun onDestroyView() {
