@@ -54,7 +54,9 @@ class BillDetailAdapter() : ListAdapter<Service, RecyclerView.ViewHolder>(DiffCa
                 val consumed = service.currentValue - service.previousValue
                 val sum = consumed * service.tariff
                 textViewServiceName.text = service.name
-                textViewTariffValue.text = context.getString(R.string.tariff_value)
+                textViewTariffValue.text = context.getString(
+                    R.string.tariff_value, service.tariff
+                )
                 textViewCurrentValue.text = context.getString(
                     R.string.current_value_detail, service.currentValue, service.unit
                 )

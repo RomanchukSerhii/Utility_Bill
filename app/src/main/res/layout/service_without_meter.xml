@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <TextView
         android:id="@+id/textViewServiceNameTitle"
@@ -13,7 +15,7 @@
         android:fontFamily="@font/lato_regular"
         android:text="@string/service_name_title"
         android:textColor="@color/dark_gray"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +26,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/lato_regular"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@id/textViewServiceNameTitle"
         app:layout_constraintBottom_toBottomOf="@id/textViewServiceNameTitle"
         app:layout_constraintStart_toEndOf="@id/textViewServiceNameTitle"
@@ -39,7 +41,7 @@
         android:fontFamily="@font/lato_regular"
         android:text="@string/sum_title"
         android:textColor="@color/dark_gray"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewServiceNameTitle" />
 
@@ -51,7 +53,7 @@
         android:fontFamily="@font/lato_regular"
         android:text="@string/sum_value"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@id/textViewSumTitle"
         app:layout_constraintBottom_toBottomOf="@id/textViewSumTitle"
         app:layout_constraintStart_toEndOf="@id/textViewSumTitle"
@@ -61,8 +63,8 @@
         android:id="@+id/divider"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="12dp"
         android:background="?android:attr/listDivider"
         android:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
