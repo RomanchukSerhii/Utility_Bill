@@ -1,18 +1,16 @@
-package com.example.utilitybill.model
+package com.example.utilitybill.model.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ListAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
-import com.example.utilitybill.database.Bill
 import com.example.utilitybill.databinding.FragmentBillListBinding
+import com.example.utilitybill.model.adapters.BillAdapter
+import com.example.utilitybill.model.adapters.BillDetailAdapter
 import com.example.utilitybill.viewmodel.BillViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.properties.Delegates.notNull

@@ -1,4 +1,4 @@
-package com.example.utilitybill.model
+package com.example.utilitybill.model.fragments
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -11,18 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Bill
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentResultBinding
+import com.example.utilitybill.model.isInteger
 import com.example.utilitybill.viewmodel.BillViewModel
 import com.example.utilitybill.viewmodel.MainViewModel
-import kotlin.math.*
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.notNull
 
 
@@ -159,21 +156,27 @@ class ResultFragment : Fragment() {
         val currentMonth = preferences.getString(
             PREF_MONTH_VALUE, getString(R.string.default_month)
         ) ?: ""
-        val bill = Bill(
-            services = services,
-            month = currentMonth,
-            billResult = billResult
-        )
+
         billViewModel.getBills().observe(viewLifecycleOwner) { bills ->
             var isNewBill = true
-            bills.forEach { bill ->
-                if (bill.month == currentMonth) {
-                    billViewModel.updateBill(bill)
+            bills.forEach { previousBill ->
+                if (previousBill.month == currentMonth) {
+                    val currentBill = previousBill.copy(
+                        services = services,
+                        month = currentMonth,
+                        billResult = billResult
+                    )
+                    billViewModel.updateBill(currentBill)
                     isNewBill = false
                 }
             }
             if (isNewBill) {
-                billViewModel.addBill(bill)
+                val newBill = Bill(
+                    services = services,
+                    month = currentMonth,
+                    billResult = billResult
+                )
+                billViewModel.addBill(newBill)
             }
         }
     }

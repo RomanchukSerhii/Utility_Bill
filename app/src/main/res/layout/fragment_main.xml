@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintHeight_default="wrap"
-    tools:context=".model.MainFragment">
+    tools:context=".model.fragments.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintHeader"

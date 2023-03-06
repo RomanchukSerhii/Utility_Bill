@@ -1,4 +1,4 @@
-package com.example.utilitybill.model
+package com.example.utilitybill.model.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

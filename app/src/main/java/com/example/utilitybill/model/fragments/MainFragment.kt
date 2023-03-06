@@ -1,4 +1,4 @@
-package com.example.utilitybill.model
+package com.example.utilitybill.model.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -22,6 +22,10 @@ import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
 import com.example.utilitybill.databinding.ServiceItemBinding
+import com.example.utilitybill.model.adapters.CheckableLayout
+import com.example.utilitybill.model.adapters.ItemTouchHelperCallback
+import com.example.utilitybill.model.adapters.ServiceAdapter
+import com.example.utilitybill.model.trimZero
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -206,7 +210,7 @@ class MainFragment : Fragment() {
     }
 
     private fun goToResult() {
-        viewModel.updateServices(serviceAdapter.currentList)
+//        viewModel.updateServices(serviceAdapter.currentList)
         if (saveMeterValue()) {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToResultFragment()
@@ -224,9 +228,7 @@ class MainFragment : Fragment() {
         val recyclerView = binding.recyclerView
         for (i in 0 until recyclerView.childCount) {
             val child = recyclerView.getChildAt(i)
-            if (child is MaterialCardView) {
-                if (!saveMeterValue(child)) return false
-            }
+            if (!saveMeterValue(child)) return false
         }
         return true
     }
@@ -236,7 +238,10 @@ class MainFragment : Fragment() {
         serviceItemBinding.apply {
             val serviceId = textViewServiceId.text.toString().toInt()
             val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+            Log.d("MainFragment", "previous - $previousValue")
             val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+            Log.d("MainFragment", "current - $currentValue")
+            Log.d("MainFragment", "---")
             return if (currentValue - previousValue < 0) {
                 editTextCurrentValue.error = getString(R.string.current_value_error)
                 editTextCurrentValue.requestFocus()
