@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -66,6 +67,12 @@ class MainFragment : Fragment() {
             },
             { editTextPreviousValue, editTextCurrentValue ->
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
+            },
+            { serviceId, currentValue ->
+                updateCurrentValue(serviceId, currentValue)
+            },
+            { serviceId, previousValue ->
+                updatePreviousValue(serviceId, previousValue)
             }
         )
 
@@ -210,7 +217,7 @@ class MainFragment : Fragment() {
     }
 
     private fun goToResult() {
-//        viewModel.updateServices(serviceAdapter.currentList)
+        viewModel.updateServices(serviceAdapter.currentList)
         if (saveMeterValue()) {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToResultFragment()
@@ -226,33 +233,40 @@ class MainFragment : Fragment() {
 
     private fun saveMeterValue(): Boolean {
         val recyclerView = binding.recyclerView
-        for (i in 0 until recyclerView.childCount) {
-            val child = recyclerView.getChildAt(i)
-            if (!saveMeterValue(child)) return false
+//        for (i in 0 until recyclerView.childCount) {
+//            val child = recyclerView.getChildAt(i)
+//            if (!saveMeterValue(child)) return false
+//        }
+        val currentServices = serviceAdapter.currentList
+        currentServices.forEach { service ->
+            if (service.previousValue > service.currentValue) {
+                Toast.makeText(requireContext(), "В послузі \"${service.name}\" поточні значення лічилькника меньші за попередні!", Toast.LENGTH_SHORT).show()
+                return false
+            }
         }
         return true
     }
 
-    private fun saveMeterValue(serviceItemView: View): Boolean {
-        val serviceItemBinding = ServiceItemBinding.bind(serviceItemView)
-        serviceItemBinding.apply {
-            val serviceId = textViewServiceId.text.toString().toInt()
-            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
-            Log.d("MainFragment", "previous - $previousValue")
-            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
-            Log.d("MainFragment", "current - $currentValue")
-            Log.d("MainFragment", "---")
-            return if (currentValue - previousValue < 0) {
-                editTextCurrentValue.error = getString(R.string.current_value_error)
-                editTextCurrentValue.requestFocus()
-                editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
-                false
-            } else {
-                viewModel.updateMeterValue(serviceId, previousValue, currentValue)
-                true
-            }
-        }
-    }
+//    private fun saveMeterValue(serviceItemView: View): Boolean {
+//        val serviceItemBinding = ServiceItemBinding.bind(serviceItemView)
+//        serviceItemBinding.apply {
+//            val serviceId = textViewServiceId.text.toString().toInt()
+//            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+//            Log.d("MainFragment", "previous - $previousValue")
+//            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+//            Log.d("MainFragment", "current - $currentValue")
+//            Log.d("MainFragment", "---")
+//            return if (currentValue - previousValue < 0) {
+//                editTextCurrentValue.error = getString(R.string.current_value_error)
+//                editTextCurrentValue.requestFocus()
+//                editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
+//                false
+//            } else {
+//                viewModel.updateMeterValue(serviceId, previousValue, currentValue)
+//                true
+//            }
+//        }
+//    }
 
     private fun saveCurrentMeterValues() {
         val recyclerView = binding.recyclerView
@@ -271,7 +285,7 @@ class MainFragment : Fragment() {
 
     private fun onListItemClicked(view: View, service: Service) {
         viewModel.updateServices(serviceAdapter.currentList)
-        saveMeterValue(view)
+//        saveMeterValue(view)
         val checkableLayout = view.findViewById<CheckableLayout>(R.id.checkable_layout)
 
         if (checkableLayout != null) {
@@ -294,6 +308,14 @@ class MainFragment : Fragment() {
             MainFragmentDirections
                 .actionMainFragmentToSaveServiceFragment(serviceId, isServiceUsed, currentValue)
         )
+    }
+
+    private fun updateCurrentValue(serviceId: Int, currentValue: Int) {
+        viewModel.updateCurrentValue(serviceId, currentValue)
+    }
+
+    private fun updatePreviousValue(serviceId: Int, previousValue: Int) {
+        viewModel.updatePreviousValue(serviceId, previousValue)
     }
 
     private fun currentValueErrorListener(

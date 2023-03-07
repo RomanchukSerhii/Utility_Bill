@@ -100,6 +100,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updatePreviousValue(id: Int, previousValue: Int) {
+        viewModelScope.launch {
+            appDao.changePreviousValue(id, previousValue)
+        }
+    }
+
     fun removeService(id: Int) {
         viewModelScope.launch {
             appDao.removeService(id)
