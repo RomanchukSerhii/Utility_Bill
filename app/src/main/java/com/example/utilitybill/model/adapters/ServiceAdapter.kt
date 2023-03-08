@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -115,14 +116,42 @@ class ServiceAdapter(
 
                 editTextCurrentValue.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && checkValues()) {
-                        updateCurrentValue(service.id, editTextCurrentValue.text.toString().trimZero().toInt())
+                        updateCurrentValue(
+                            service.id,
+                            editTextCurrentValue.text.toString().trimZero().toInt()
+                        )
                     }
+                }
+
+                editTextCurrentValue.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        updateCurrentValue(
+                            service.id,
+                            editTextCurrentValue.text.toString().trimZero().toInt()
+                        )
+                        return@setOnEditorActionListener true
+                    }
+                    return@setOnEditorActionListener false
                 }
 
                 editTextPreviousValue.setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus && checkValues()) {
-                        updatePreviousValue(service.id, editTextPreviousValue.text.toString().trimZero().toInt())
+                        updatePreviousValue(
+                            service.id,
+                            editTextPreviousValue.text.toString().trimZero().toInt()
+                        )
                     }
+                }
+
+                editTextPreviousValue.setOnEditorActionListener { _, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        updatePreviousValue(
+                            service.id,
+                            editTextPreviousValue.text.toString().trimZero().toInt()
+                        )
+                        return@setOnEditorActionListener true
+                    }
+                    return@setOnEditorActionListener false
                 }
             }
         }
