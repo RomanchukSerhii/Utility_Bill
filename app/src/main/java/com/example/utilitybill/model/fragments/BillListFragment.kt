@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
+import com.example.utilitybill.database.Bill
 import com.example.utilitybill.databinding.FragmentBillListBinding
 import com.example.utilitybill.model.adapters.BillAdapter
 import com.example.utilitybill.model.adapters.BillDetailAdapter
@@ -56,10 +57,24 @@ class BillListFragment : Fragment() {
             billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
                 billDetailAdapter.submitList(bill.services)
                 binding.textViewTotal.visibility = View.VISIBLE
-                binding.textViewTotal.text = getString(R.string.bill_detail_total)
+                val totalValues = getTotalValues(bill)
+                binding.textViewTotal.text = getString(R.string.bill_detail_total, totalValues)
             }
             binding.recyclerViewBill.adapter = billDetailAdapter
         }
+    }
+
+    private fun getTotalValues(bill: Bill): Int {
+        val services = bill.services
+        var total = 0
+        services.forEach { service ->
+            val serviceTotal = if (service.isHasMeter) {
+                val differentValues = service.currentValue - service.previousValue
+                (differentValues * service.tariff).toInt()
+            } else service.tariff.toInt()
+            total += serviceTotal
+        }
+        return total
     }
 
     override fun onDestroyView() {
