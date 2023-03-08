@@ -62,7 +62,6 @@ class ResultFragment : Fragment() {
                 servicesList = services.filter { it.isUsed }
                 billResult = createBill(services)
                 binding.textViewBill.text = billResult
-                addBill(services)
             } else {
                 billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
                     binding.apply {
@@ -138,6 +137,7 @@ class ResultFragment : Fragment() {
             }
         }
         stringBuilder.append(getString(R.string.service_total, total, cardNumber))
+
         return stringBuilder.toString()
     }
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
@@ -40,6 +41,7 @@ class BillListFragment : Fragment() {
             billId = it.getInt(BILL_ID_KEY)
         }
         if (billId < 0) {
+            binding.textViewTotal.visibility = View.GONE
             billAdapter = BillAdapter(
                 { billId -> onListItemClicked(billId) },
                 { billId -> onDeleteItemClicked(billId) }
@@ -49,9 +51,12 @@ class BillListFragment : Fragment() {
             }
             binding.recyclerViewBill.adapter = billAdapter
         } else {
+            (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.bill_detail)
             billDetailAdapter = BillDetailAdapter()
             billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
                 billDetailAdapter.submitList(bill.services)
+                binding.textViewTotal.visibility = View.VISIBLE
+                binding.textViewTotal.text = getString(R.string.bill_detail_total)
             }
             binding.recyclerViewBill.adapter = billDetailAdapter
         }

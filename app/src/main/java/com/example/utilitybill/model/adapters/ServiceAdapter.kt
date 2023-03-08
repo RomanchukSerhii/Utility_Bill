@@ -113,38 +113,24 @@ class ServiceAdapter(
 
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
 
-                editTextCurrentValue.setOnEditorActionListener { view, actionId, _ ->
-                    val currentValue = view.text.toString().trimZero().toInt()
-                    updateCurrentValue(service.id, currentValue)
-                    true
+                editTextCurrentValue.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && checkValues()) {
+                        updateCurrentValue(service.id, editTextCurrentValue.text.toString().trimZero().toInt())
+                    }
                 }
 
-                editTextPreviousValue.addTextChangedListener(object : TextWatcher {
-                    private var isFormatting: Boolean = false
-
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-
-                    override fun afterTextChanged(s: Editable?) {
-                        if (isFormatting) {
-                            return
-                        }
-
-                        isFormatting = true
-                        if (s != null) {
-                            val value = s.toString().trimZero().toInt()
-                            updatePreviousValue(service.id, value)
-                            editTextPreviousValue.setSelection(s.toString().length)
-                        } else {
-                            updatePreviousValue(service.id, 0)
-                        }
-
-
-                        isFormatting = false
+                editTextPreviousValue.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus && checkValues()) {
+                        updatePreviousValue(service.id, editTextPreviousValue.text.toString().trimZero().toInt())
                     }
-                })
+                }
             }
+        }
+
+        private fun checkValues(): Boolean {
+            val currentValue = binding.editTextCurrentValue.text.toString().trimZero().toInt()
+            val previousValue = binding.editTextPreviousValue.text.toString().trimZero().toInt()
+            return previousValue <= currentValue
         }
 
         private fun switchValueMeterVisibility(meterVisibility: Int) {
