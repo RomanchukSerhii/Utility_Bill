@@ -57,18 +57,19 @@ class ResultFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.getServices().observe(viewLifecycleOwner) { services ->
-            if (billId < 0) {
+        if (billId < 0) {
+            viewModel.getServices().observe(viewLifecycleOwner) { services ->
                 servicesList = services.filter { it.isUsed }
                 billResult = createBill(services)
                 binding.textViewBill.text = billResult
-            } else {
-                billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
-                    binding.apply {
-                        textViewBill.text = bill.billResult
-                        buttonSaveBill.visibility = View.GONE
-                        buttonBillDetail.visibility = View.VISIBLE
-                    }
+                addBill(services)
+            }
+        } else {
+            billViewModel.getBill(billId).observe(viewLifecycleOwner) { bill ->
+                binding.apply {
+                    textViewBill.text = bill.billResult
+                    buttonSaveBill.visibility = View.GONE
+                    buttonBillDetail.visibility = View.VISIBLE
                 }
             }
         }
