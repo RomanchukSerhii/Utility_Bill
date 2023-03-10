@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.utilitybill.R
 import com.example.utilitybill.database.Service
 import com.example.utilitybill.databinding.ServiceItemBinding
-import com.example.utilitybill.model.fragments.MainFragment
 import com.example.utilitybill.model.trimZero
 
 class ServiceAdapter(
@@ -28,13 +26,10 @@ class ServiceAdapter(
         editTextPreviousValue: EditText,
         editTextCurrentValue: EditText
     ) -> Unit,
-    private val updateCurrentValue: (
+    private val saveMeterValues: (
         serviceId: Int,
+        previousValue: Int,
         currentValue: Int
-    ) -> Unit,
-    private val updatePreviousValue: (
-        serviceId: Int,
-        previousValue: Int
     ) -> Unit
 ) : ListAdapter<Service, ServiceAdapter.ServiceItemViewHolder>(DiffCallback) {
 
@@ -48,8 +43,7 @@ class ServiceAdapter(
             binding,
             onEditServiceClicked,
             currentValueErrorListener,
-            updateCurrentValue,
-            updatePreviousValue
+            saveMeterValues
         )
     }
 
@@ -75,13 +69,10 @@ class ServiceAdapter(
             editTextPreviousValue: EditText,
             editTextCurrentValue: EditText
         ) -> Unit,
-        private val updateCurrentValue: (
+        private val saveMeterValues: (
             serviceId: Int,
+            previousValue: Int,
             currentValue: Int
-        ) -> Unit,
-        private val updatePreviousValue: (
-            serviceId: Int,
-            previousValue: Int
         ) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -114,52 +105,54 @@ class ServiceAdapter(
 
                 currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
 
-                editTextCurrentValue.setOnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus && checkValues()) {
-                        updateCurrentValue(
-                            service.id,
-                            editTextCurrentValue.text.toString().trimZero().toInt()
-                        )
+                editTextCurrentValue.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
                     }
-                }
 
-                editTextCurrentValue.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        updateCurrentValue(
-                            service.id,
-                            editTextCurrentValue.text.toString().trimZero().toInt()
-                        )
-                        return@setOnEditorActionListener true
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+                        val currentValue = s.toString().trimZero().toInt()
+                        saveMeterValues(service.id, previousValue, currentValue)
                     }
-                    return@setOnEditorActionListener false
-                }
 
-                editTextPreviousValue.setOnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus && checkValues()) {
-                        updatePreviousValue(
-                            service.id,
-                            editTextPreviousValue.text.toString().trimZero().toInt()
-                        )
+                    override fun afterTextChanged(s: Editable?) {
                     }
-                }
+                })
 
-                editTextPreviousValue.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        updatePreviousValue(
-                            service.id,
-                            editTextPreviousValue.text.toString().trimZero().toInt()
-                        )
-                        return@setOnEditorActionListener true
+                editTextPreviousValue.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
                     }
-                    return@setOnEditorActionListener false
-                }
+
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        val previousValue = s.toString().trimZero().toInt()
+                        val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+                        saveMeterValues(service.id, previousValue, currentValue)
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                    }
+                })
             }
-        }
-
-        private fun checkValues(): Boolean {
-            val currentValue = binding.editTextCurrentValue.text.toString().trimZero().toInt()
-            val previousValue = binding.editTextPreviousValue.text.toString().trimZero().toInt()
-            return previousValue <= currentValue
         }
 
         private fun switchValueMeterVisibility(meterVisibility: Int) {

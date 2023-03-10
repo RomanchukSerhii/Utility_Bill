@@ -65,6 +65,6 @@
     <string name="current_value_detail">%d %s</string>
     <string name="previous_value_detail">%d %s</string>
     <string name="consumed_value">%d %s</string>
-    <string name="values_error">В послузі %s поточні значення лічилькника меньші за попередні!</string>
+    <string name="values_error">Поточні значення лічилькника повинні бути більші за попередні!</string>
     <string name="bill_detail_total">Разом: %d</string>
 </resources>
