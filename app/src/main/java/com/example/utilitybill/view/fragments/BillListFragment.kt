@@ -1,4 +1,4 @@
-package com.example.utilitybill.model.fragments
+package com.example.utilitybill.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.utilitybill.R
-import com.example.utilitybill.database.Bill
+import com.example.utilitybill.database.model.Bill
 import com.example.utilitybill.databinding.FragmentBillListBinding
-import com.example.utilitybill.model.adapters.BillAdapter
-import com.example.utilitybill.model.adapters.BillDetailAdapter
+import com.example.utilitybill.view.adapters.BillAdapter
+import com.example.utilitybill.view.adapters.BillDetailAdapter
 import com.example.utilitybill.viewmodel.BillViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlin.properties.Delegates.notNull

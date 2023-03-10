@@ -1,4 +1,4 @@
-package com.example.utilitybill.model.fragments
+package com.example.utilitybill.view.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -20,14 +19,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
-import com.example.utilitybill.database.Service
+import com.example.utilitybill.database.model.Service
 import com.example.utilitybill.databinding.FragmentMainBinding
-import com.example.utilitybill.databinding.ServiceItemBinding
-import com.example.utilitybill.model.adapters.CheckableLayout
-import com.example.utilitybill.model.adapters.ItemTouchHelperCallback
-import com.example.utilitybill.model.adapters.ServiceAdapter
-import com.example.utilitybill.model.trimZero
-import com.google.android.material.card.MaterialCardView
+import com.example.utilitybill.view.adapters.CheckableLayout
+import com.example.utilitybill.view.adapters.ItemTouchHelperCallback
+import com.example.utilitybill.view.adapters.ServiceAdapter
+import com.example.utilitybill.view.trimZero
 import java.text.SimpleDateFormat
 import java.util.*
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.utilitybill.model.fragments.MainFragment"
+        android:name="com.example.utilitybill.view.fragments.MainFragment"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_saveServiceFragment"
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/saveServiceFragment"
-        android:name="com.example.utilitybill.model.fragments.SaveServiceFragment"
+        android:name="com.example.utilitybill.view.fragments.SaveServiceFragment"
         android:label="@string/add_service_title"
         tools:layout="@layout/fragment_save_service">
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
-        android:name="com.example.utilitybill.model.fragments.ResultFragment"
+        android:name="com.example.utilitybill.view.fragments.ResultFragment"
         android:label="@string/result_title"
         tools:layout="@layout/fragment_result" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/billListFragment"
-        android:name="com.example.utilitybill.model.fragments.BillListFragment"
+        android:name="com.example.utilitybill.view.fragments.BillListFragment"
         android:label="@string/archive_bills"
         tools:layout="@layout/fragment_bill_list">
         <action

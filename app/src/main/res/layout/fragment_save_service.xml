@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".model.fragments.SaveServiceFragment">
+    tools:context=".view.fragments.SaveServiceFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNameService"

@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.utilitybill.database.AppDatabase
-import com.example.utilitybill.database.Bill
+import com.example.utilitybill.database.model.Bill
 import kotlinx.coroutines.launch
 
 class BillViewModel(application: Application): AndroidViewModel(application) {

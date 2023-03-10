@@ -1,4 +1,4 @@
-package com.example.utilitybill.database
+package com.example.utilitybill.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

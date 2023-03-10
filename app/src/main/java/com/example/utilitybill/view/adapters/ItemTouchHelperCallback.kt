@@ -1,4 +1,4 @@
-package com.example.utilitybill.model.adapters
+package com.example.utilitybill.view.adapters
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

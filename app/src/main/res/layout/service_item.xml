@@ -12,7 +12,7 @@
     app:cardUseCompatPadding="true"
     app:strokeColor="@android:color/background_light">
 
-    <com.example.utilitybill.model.adapters.CheckableLayout
+    <com.example.utilitybill.view.adapters.CheckableLayout
         android:id="@+id/checkable_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
 
-    </com.example.utilitybill.model.adapters.CheckableLayout>
+    </com.example.utilitybill.view.adapters.CheckableLayout>
 
 
 </com.google.android.material.card.MaterialCardView>

@@ -1,4 +1,4 @@
-package com.example.utilitybill.model.adapters
+package com.example.utilitybill.view.adapters
 
 
 import android.content.Context
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.utilitybill.R
-import com.example.utilitybill.database.Service
+import com.example.utilitybill.database.model.Service
 import com.example.utilitybill.databinding.ServiceWithMeterBinding
 import com.example.utilitybill.databinding.ServiceWithoutMeterBinding
 

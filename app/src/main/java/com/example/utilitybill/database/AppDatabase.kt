@@ -3,6 +3,8 @@ package com.example.utilitybill.database
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.utilitybill.database.model.Bill
+import com.example.utilitybill.database.model.Service
 
 @Database(entities = [Service::class, Bill::class], version = 6, exportSchema = false)
 @TypeConverters(ServiceListConverter::class)

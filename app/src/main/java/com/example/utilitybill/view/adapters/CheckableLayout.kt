@@ -1,4 +1,4 @@
-package com.example.utilitybill.model.adapters
+package com.example.utilitybill.view.adapters
 
 import android.content.Context
 import android.util.AttributeSet

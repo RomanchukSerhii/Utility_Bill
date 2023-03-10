@@ -2,7 +2,7 @@ package com.example.utilitybill.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.utilitybill.database.Service
+import com.example.utilitybill.database.model.Service
 import com.example.utilitybill.database.AppDatabase
 import kotlinx.coroutines.launch
 

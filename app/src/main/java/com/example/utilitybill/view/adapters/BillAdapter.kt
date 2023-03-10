@@ -1,11 +1,11 @@
-package com.example.utilitybill.model.adapters
+package com.example.utilitybill.view.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.utilitybill.database.Bill
+import com.example.utilitybill.database.model.Bill
 import com.example.utilitybill.databinding.BillItemBinding
 
 class BillAdapter(
