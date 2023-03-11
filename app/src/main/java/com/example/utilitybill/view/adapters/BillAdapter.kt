@@ -25,7 +25,7 @@ class BillAdapter(
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
         val currentBill = getItem(position)
         holder.bind(currentBill, onDeleteIconClicked)
-        holder.itemView. setOnClickListener { onListItemClicked(currentBill.id) }
+        holder.itemView.setOnClickListener { onListItemClicked(currentBill.id) }
     }
 
     class BillItemViewHolder(

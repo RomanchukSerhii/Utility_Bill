@@ -27,6 +27,8 @@ import com.example.utilitybill.view.adapters.ServiceAdapter
 import com.example.utilitybill.view.trimZero
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.properties.Delegates
+import kotlin.properties.Delegates.notNull
 
 const val APP_PREFERENCES = "APP_PREFERENCES"
 const val PREF_CARD_NUMBER_VALUE = "PREF_CARD_NUMBER_VALUE"
@@ -39,6 +41,7 @@ class MainFragment : Fragment() {
 
     private lateinit var serviceAdapter: ServiceAdapter
     private lateinit var preferences: SharedPreferences
+    private var isBillSaved: Boolean by notNull()
     private val viewModel: MainViewModel by activityViewModels()
     private val currentMeterValues = mutableMapOf<Int, Array<Int>>()
 
@@ -57,6 +60,8 @@ class MainFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background)
         )
         (activity as AppCompatActivity).supportActionBar?.hide()
+
+        isBillSaved = preferences.getBoolean(IS_BILL_SAVED_VALUE, false)
 
         serviceAdapter = ServiceAdapter(
             { viewType, service -> onListItemClicked(viewType, service) },
@@ -199,6 +204,18 @@ class MainFragment : Fragment() {
 
     private fun observeViewModels() {
         viewModel.getServices().observe(viewLifecycleOwner) { services ->
+            if (isBillSaved) {
+                services.forEach { service ->
+                    service.previousValue = service.currentValue
+                    service.currentValue = 0
+                }
+                isBillSaved = false
+                preferences.edit()
+                    .putBoolean(IS_BILL_SAVED_VALUE, isBillSaved)
+                    .apply()
+                viewModel.updateServices(services)
+            }
+
             serviceAdapter.submitList(services)
             if (currentMeterValues.isEmpty()) {
                 services.forEach { service ->
@@ -327,5 +344,6 @@ class MainFragment : Fragment() {
 
     companion object {
         private const val CARD_NUMBER_LENGTH = 19
+        private const val IS_BILL_SAVED_VALUE = "IS_BILL_SAVED_VALUE"
     }
 }

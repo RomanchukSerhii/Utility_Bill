@@ -12,7 +12,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _isMeterChecked = MutableLiveData<Boolean>()
     val isMeterChecked: LiveData<Boolean> = _isMeterChecked
 
-
     fun getServices(): LiveData<List<Service>> {
         return appDao.getServices()
     }

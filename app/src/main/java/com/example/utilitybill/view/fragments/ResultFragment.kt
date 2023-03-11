@@ -153,7 +153,7 @@ class ResultFragment : Fragment() {
 
         if (previousBills.isEmpty()) {
             addNewBill(services, currentMonth)
-            goToMainFragment(services)
+            goToMainFragment()
         } else {
             previousBills.forEach { previousBill ->
                 if (previousBill.month == currentMonth) {
@@ -164,10 +164,10 @@ class ResultFragment : Fragment() {
                     )
                     billViewModel.updateBill(currentBill)
 
-                    goToMainFragment(services)
+                    goToMainFragment()
                 } else {
                     addNewBill(services, currentMonth)
-                    goToMainFragment(services)
+                    goToMainFragment()
                 }
             }
         }
@@ -182,12 +182,18 @@ class ResultFragment : Fragment() {
         billViewModel.addBill(newBill)
     }
 
-    private fun goToMainFragment(services: List<Service>) {
-        services.forEach { service ->
-            service.previousValue = service.currentValue
-            service.currentValue = 0
-        }
-        viewModel.updateServices(services)
+    private fun goToMainFragment() {
+//        val servicesCopy = services.toList()
+//        servicesCopy.forEach { service ->
+//            service.previousValue = service.currentValue
+//            service.currentValue = 0
+//        }
+////        viewModel.updateServices(services)
+        val isBillSaved = true
+        preferences.edit()
+            .putBoolean(IS_BILL_SAVED_VALUE, isBillSaved)
+            .apply()
+
         findNavController().navigate(
             ResultFragmentDirections.actionResultFragmentToMainFragment()
         )
@@ -201,6 +207,7 @@ class ResultFragment : Fragment() {
 
     companion object {
         private const val BILL_ID_KEY = "bill_id"
+        private const val IS_BILL_SAVED_VALUE = "IS_BILL_SAVED_VALUE"
     }
 
 }
