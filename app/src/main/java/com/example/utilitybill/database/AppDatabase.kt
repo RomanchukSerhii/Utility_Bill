@@ -39,7 +39,7 @@ interface ServiceDao {
     @Query("SELECT * FROM service WHERE id = :id")
     fun getService(id: Int): LiveData<Service>
 
-    @Query("SELECT MAX('order') FROM service")
+    @Query("SELECT MAX(`order`) FROM service")
     suspend fun getMaxOrder(): Int?
 
     @Insert
