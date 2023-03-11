@@ -113,6 +113,8 @@ class MainFragment : Fragment() {
                 editTextCardNumber.visibility = View.VISIBLE
                 editTextCardNumber.setText(currentCardNumber)
                 editTextCardNumber.requestFocus()
+                editTextCardNumber.isFocusable = true
+                editTextCardNumber.isFocusableInTouchMode = true
 
                 imageViewEditCardDone.visibility = View.VISIBLE
                 textViewCardNumber.visibility = View.GONE
@@ -357,7 +359,7 @@ class MainFragment : Fragment() {
         editTextCurrentValue: EditText
     ) {
         if (isCurrentValueValid) {
-            editTextCurrentValue.error = null
+            editTextCurrentValue.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
         } else {
             val errorIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_error)
             editTextCurrentValue.setCompoundDrawablesWithIntrinsicBounds(null, null, errorIcon, null)
