@@ -93,18 +93,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun updateCurrentValue(id: Int, currentValue: Int) {
-        viewModelScope.launch {
-            appDao.changeCurrentValue(id, currentValue)
-        }
-    }
-
-    fun updatePreviousValue(id: Int, previousValue: Int) {
-        viewModelScope.launch {
-            appDao.changePreviousValue(id, previousValue)
-        }
-    }
-
     fun removeService(id: Int) {
         viewModelScope.launch {
             appDao.removeService(id)

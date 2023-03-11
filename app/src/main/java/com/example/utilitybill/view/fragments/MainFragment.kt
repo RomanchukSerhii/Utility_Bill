@@ -27,7 +27,6 @@ import com.example.utilitybill.view.adapters.ServiceAdapter
 import com.example.utilitybill.view.trimZero
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.properties.Delegates
 import kotlin.properties.Delegates.notNull
 
 const val APP_PREFERENCES = "APP_PREFERENCES"

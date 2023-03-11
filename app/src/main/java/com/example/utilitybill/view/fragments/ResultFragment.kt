@@ -183,12 +183,6 @@ class ResultFragment : Fragment() {
     }
 
     private fun goToMainFragment() {
-//        val servicesCopy = services.toList()
-//        servicesCopy.forEach { service ->
-//            service.previousValue = service.currentValue
-//            service.currentValue = 0
-//        }
-////        viewModel.updateServices(services)
         val isBillSaved = true
         preferences.edit()
             .putBoolean(IS_BILL_SAVED_VALUE, isBillSaved)
