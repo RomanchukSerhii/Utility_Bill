@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -358,7 +359,8 @@ class MainFragment : Fragment() {
         if (isCurrentValueValid) {
             editTextCurrentValue.error = null
         } else {
-            editTextCurrentValue.error = resources.getString(R.string.current_value_error)
+            val errorIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_error)
+            editTextCurrentValue.setCompoundDrawablesWithIntrinsicBounds(null, null, errorIcon, null)
         }
     }
 
