@@ -17,6 +17,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.utilitybill.viewmodel.MainViewModel
 import com.example.utilitybill.R
 import com.example.utilitybill.database.model.Service
@@ -237,10 +239,29 @@ class MainFragment : Fragment() {
 
     private fun goToResult() {
         viewModel.updateServices(serviceAdapter.currentList)
+        checkErrorFields()
         if (saveMeterValue()) {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToResultFragment()
             )
+        }
+    }
+
+    private fun checkErrorFields() {
+        val recyclerView = binding.recyclerView
+        for (i in 0 until recyclerView.childCount) {
+            val itemView = recyclerView.getChildAt(i)
+            val editTextCurrentValue = itemView.findViewById<EditText>(R.id.editTextCurrentValue)
+            val editTextPreviousValue = itemView.findViewById<EditText>(R.id.editTextPreviousValue)
+            val currentValue = editTextCurrentValue.text.toString().trimZero().toInt()
+            val previousValue = editTextPreviousValue.text.toString().trimZero().toInt()
+            if (previousValue > currentValue) {
+                editTextCurrentValue.requestFocus()
+                editTextCurrentValue.setSelection(editTextCurrentValue.text.length)
+                setCurrentValueError(false, editTextCurrentValue)
+                currentValueErrorListener(editTextPreviousValue, editTextCurrentValue)
+                recyclerView.scrollBy(0, 50)
+            }
         }
     }
 
